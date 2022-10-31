@@ -9,6 +9,16 @@ PERSONAL_ID = 'F8D819'
 PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 
+def mail(HOST, PORT, to_send):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((HOST, int(PORT)))
+        # s.listen()
+        # conn, addr = s.accept()
+
+        for i in range(len(to_send)):
+            s.send((to_send[i]+'\n').encode())
+
+
 def merge_mail(ls1, ls2):
     # merges 2 lists of the formated mail contents and the output
     # to be sent to the server
@@ -86,6 +96,7 @@ def main():
     # use the conf file to get relevant information
     send_path = conf['send_path']
     client_port = conf['client_port']
+    host = "127.0.0.1"
 
     to_send = []
     for filename in os.listdir(send_path[1:]):
@@ -95,6 +106,8 @@ def main():
 
     print(*to_send, sep='\n\n')
 
+    for i in range(len(to_send)):
+        mail(host, client_port, to_send[i])
 
 
 if __name__ == '__main__':
