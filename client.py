@@ -110,11 +110,14 @@ def main():
     # absolute_path = os.path.dirname(__file__)
     # send_path = absolute_path+send_path
     for filename in os.listdir(send_path):
-        path = os.path.join(send_path[1:], filename)
-        path = path[1:]
+        path = os.path.join(send_path, filename)
+        path = path
         print(path)
+        print(os.path.isfile(path))
         if os.path.isfile(path):
             to_send.append(parse_mail(path))
+
+    print(*to_send, sep="\n\n")
 
     for i in range(len(to_send)):
         mail(host, port, to_send[i])
