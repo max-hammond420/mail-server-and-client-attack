@@ -32,12 +32,12 @@ def main():
     conf = sys.argv[1]
     with open(conf) as f:
         lines = f.readlines()
-        print("s: ", end='')
+        print("server")
         print(lines)
+        sys.exit()
 
     for i in range(len(lines)):
         lines[i] = lines[i].strip()
-
 
     conf = conv_dict(lines, '=')
 

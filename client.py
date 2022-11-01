@@ -95,11 +95,13 @@ def main():
 
     with open(conf) as f:
         lines = f.readlines()
+        print("c: ", end='')
+        print(lines)
 
     for i in range(len(lines)):
         lines[i] = lines[i].strip()
 
-    print(f"c: {lines}")
+    # print(f"c: {lines}")
 
     conf = conv_dict(lines, '=')
 
