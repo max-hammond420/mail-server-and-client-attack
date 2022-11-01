@@ -120,8 +120,13 @@ def main():
     conf = conv_dict(lines, '=')
 
     # use the conf file to get relevant information
-    send_path = conf['send_path']
-    port = conf['server_port']
+    if conf['send_path'] or conf['server_port']:
+        send_path = conf['send_path']
+        port = conf['server_port']
+    else:
+        print("incomplete conf")
+        sys.exit(2)
+
     host = "127.0.0.1"
 
     to_send = []
