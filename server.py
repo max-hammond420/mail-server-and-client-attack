@@ -34,18 +34,17 @@ def server(HOST, PORT):
                     continue
 
                 # Print out client message
-                print("C: ", end='')
-                print(data)
+                print(f"C: {data}\r\n", end='')
 
                 # Server response
                 print("S: ", end='')
 
                 # do logic with data
                 if data == "QUIT":
-                    response = "221"
+                    response = "221 Service closing transmission channel"
                 else:
                     response = "220"
-                print(response)
+                print(response+'\r\n', end='')
 
                 conn.send(response.encode())
 

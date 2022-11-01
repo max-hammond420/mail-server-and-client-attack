@@ -20,7 +20,8 @@ def mail(HOST, PORT, to_send):
             # check for 220 code
 
             for i in range(len(to_send)+1):
-                # TODO implement a wait for server response, and check server code
+                # TODO implement a wait for server response, and check
+                # server code
 
                 # Waits for server response
                 data = s.recv(1024).decode()
