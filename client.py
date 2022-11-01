@@ -33,7 +33,7 @@ def mail(HOST, PORT, to_send):
             # prints the client output to server in stdout
             print(f"C: {to_send[i]}")
             # Send to server
-            s.send((to_send[i]+'\r\n').encode())
+            s.send((to_send[i]+"\r\n\n").encode())
 
         s.close()
 
