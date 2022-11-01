@@ -104,8 +104,7 @@ def connect():
 def main():
     if len(sys.argv) != 2:
         print("no conf supplied")
-        print("exit code 1")
-        sys.exit()
+        sys.exit(1)
 
     conf = sys.argv[1]
     if not os.path.isfile(conf):
