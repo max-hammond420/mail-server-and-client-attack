@@ -128,11 +128,17 @@ def main():
 
     # absolute_path = os.path.dirname(__file__)
     # send_path = absolute_path+send_path
+    if not os.path.isdir(send_path):
+        print("unreadable send path")
+        sys.exit(2)
+
     for filename in os.listdir(send_path):
         path = os.path.join(send_path, filename)
         path = path
         if os.path.isfile(path):
             to_send.append(parse_mail(path))
+        else:
+            print("")
 
     # print(*to_send, sep="\n\n")
 
