@@ -31,7 +31,7 @@ def mail(HOST, PORT, to_send):
                 break
 
             # prints the client output to server in stdout
-            print(f"C: {to_send[i]}")
+            print(f"C: {to_send[i]}\n")
             # Send to server
             s.send((to_send[i]+"\r\n").encode("ascii", "ignore"))
 
@@ -52,7 +52,7 @@ def merge_mail(ls1, ls2):
 
     ls[1] = ["MAIL FROM:"+send[0]]
     for i in range(len(to)):
-        ls[2].append("RCPT TO:"+to[i]+'\n')
+        ls[2].append("RCPT TO:"+to[i])
 
     ls = [item for sublist in ls for item in sublist]
 
