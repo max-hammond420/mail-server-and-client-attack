@@ -104,6 +104,7 @@ def connect():
 def main():
     if len(sys.argv) != 2:
         print("no conf supplied")
+        print("test")
         sys.exit(1)
 
     conf = sys.argv[1]
