@@ -52,7 +52,7 @@ def merge_mail(ls1, ls2):
 
     ls[1] = ["MAIL FROM:"+send[0]]
     for i in range(len(to)):
-        ls[2].append("MAIL TO:"+to[i])
+        ls[2].append("RCPT TO:"+to[i])
 
     ls = [item for sublist in ls for item in sublist]
 
