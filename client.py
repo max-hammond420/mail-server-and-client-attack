@@ -52,6 +52,7 @@ def parse_mail(file):
           [],
           ["."],
           ["QUIT"]]
+    print("file:", file)
     with open(file) as f:
         lines = f.readlines()
 
@@ -114,7 +115,6 @@ def main():
     # print(os.listdir(send_path))
     for filename in os.listdir(send_path):
         path = os.path.join(send_path[1:], filename)
-        print(path)
         path = path[1:]
         print(path)
         print(os.path.isdir(path))
