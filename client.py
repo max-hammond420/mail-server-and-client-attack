@@ -115,6 +115,8 @@ def main():
     for filename in os.listdir(send_path):
         path = os.path.join(send_path[1:], filename)
         print(path)
+        path = path[1:]
+        print(path)
         print(os.path.isdir(path))
         print(os.path.isfile(path))
         if os.path.isfile(path):
