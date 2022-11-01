@@ -42,6 +42,7 @@ def main():
         lines = f.readlines()
 
     conf = conv_dict(lines, '=')
+    print(conf)
 
 
 if __name__ == '__main__':

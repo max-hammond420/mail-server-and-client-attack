@@ -124,7 +124,6 @@ def main():
         print("file?", os.path.isfile(path))
         if os.path.isfile(path):
             to_send.append(parse_mail(path))
-    parse_mail(send_path)
 
     print(*to_send, sep='\n\n')
 
