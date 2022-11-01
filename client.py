@@ -112,8 +112,6 @@ def main():
     for filename in os.listdir(send_path):
         path = os.path.join(send_path, filename)
         path = path
-        print(path)
-        print(os.path.isfile(path))
         if os.path.isfile(path):
             to_send.append(parse_mail(path))
 
