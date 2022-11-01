@@ -31,8 +31,9 @@ def mail(HOST, PORT, to_send):
                 break
 
             # prints the client output to server in stdout
-            print(f"C: {to_send[i]}", flush=True)
-            s.send((to_send[i]).encode())
+            print(f"C: {to_send[i]}")
+            # Send to server
+            s.send((to_send[i]+'\n').encode())
 
         s.close()
 
@@ -61,7 +62,7 @@ def merge_mail(ls1, ls2):
 def parse_mail(file):
     # reads a file and returns a list of line by line to send information
     # to server
-    ls = [["ELHO"],
+    ls = [["EHLO 127.0.0.1"],
           [],
           [],
           ["DATA"],
