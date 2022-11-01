@@ -23,7 +23,7 @@ def mail(HOST, PORT, to_send):
             # Waits for server response
             data = s.recv(1024).decode()
             # Prints server response
-            print(f"S: {data}")
+            print(f"S: {data}", end='')
 
             # Do logic with data
             data = data.split(' ')
