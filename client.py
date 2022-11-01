@@ -109,20 +109,20 @@ def main():
     port = conf['server_port']
     host = "127.0.0.1"
 
-    # to_send = []
+    to_send = []
 
-    print(os.listdir(send_path))
-    # for filename in os.listdir(send_path[1:]):
-    #     path = os.path.join(send_path[1:], filename)
-    #     print(path)
-    #     if os.path.isfile(path):
-    #         to_send.append(parse_mail(path))
-    # parse_mail(send_path)
+    # print(os.listdir(send_path))
+    for filename in os.listdir(send_path):
+        path = os.path.join(send_path[1:], filename)
+        print(path)
+        if os.path.isfile(path):
+            to_send.append(parse_mail(path))
+    parse_mail(send_path)
 
-    # print(*to_send, sep='\n\n')
-    #
-    # for i in range(len(to_send)):
-    #     mail(host, port, to_send[i])
+    print(*to_send, sep='\n\n')
+
+    for i in range(len(to_send)):
+        mail(host, port, to_send[i])
 
 
 if __name__ == '__main__':
