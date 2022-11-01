@@ -29,6 +29,7 @@ def main():
     # additionally allow client authentication
     # allow multiple clients to connect simultaniously
     # terminate upon receiving a SIGNT signal
+    sys.exit()
     conf = sys.argv[1]
     with open(conf) as f:
         lines = f.readlines()

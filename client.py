@@ -95,8 +95,9 @@ def main():
 
     with open(conf) as f:
         lines = f.readlines()
-        print("c: ", end='')
+        print("client")
         print(lines)
+        sys.exit()
 
     for i in range(len(lines)):
         lines[i] = lines[i].strip()
