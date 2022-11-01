@@ -15,9 +15,25 @@ def mail(HOST, PORT, to_send):
         # s.listen()
         # conn, addr = s.accept()
 
-        for i in range(len(to_send)):
+        # check for 220 code
+
+        for i in range(len(to_send)+1):
             # TODO implement a wait for server response, and check server code
-            s.send((to_send[i]+'\n').encode())
+
+            # Waits for server response
+            data = s.recv(1024).decode()
+            # Prints server response
+            print(f"S: {data}")
+
+            # Do logic with data
+            if data == "221":
+                break
+
+            # prints the client output to server in stdout
+            print(f"C: {to_send[i]}", flush=True)
+            s.send((to_send[i]).encode())
+
+        s.close()
 
 
 def merge_mail(ls1, ls2):
@@ -115,7 +131,7 @@ def main():
         if os.path.isfile(path):
             to_send.append(parse_mail(path))
 
-    print(*to_send, sep="\n\n")
+    # print(*to_send, sep="\n\n")
 
     for i in range(len(to_send)):
         mail(host, port, to_send[i])

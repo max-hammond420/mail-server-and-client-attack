@@ -1,4 +1,4 @@
-server_port=2002
+server_port=2008
 client_port=1026
 inbox_path=/inbox
 send_path=/send

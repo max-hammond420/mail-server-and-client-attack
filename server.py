@@ -23,13 +23,31 @@ def server(HOST, PORT):
         s.listen()
         conn, addr = s.accept()
         with conn:
-            print(f"Connected by {addr}")
+            print("S: 220 Service ready")
+            conn.send("220 Service ready".encode())
             while True:
-                data = conn.recv(1024)
-                print(data)
+                # Receive client message
+                data = conn.recv(1024).decode()
+
+                # If no client says nothing, do nothing
                 if not data:
-                    break
-                conn.sendall("220\n".encode())
+                    continue
+
+                # Print out client message
+                print("C: ", end='')
+                print(data)
+
+                # Server response
+                print("S: ", end='')
+
+                # do logic with data
+                if data == "QUIT":
+                    response = "221"
+                else:
+                    response = "220"
+                print(response)
+
+                conn.send(response.encode())
 
 
 def main():
