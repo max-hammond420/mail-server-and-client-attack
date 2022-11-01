@@ -26,7 +26,8 @@ def mail(HOST, PORT, to_send):
             print(f"S: {data}")
 
             # Do logic with data
-            if data == "221":
+            data = data.split(' ')
+            if data[0] == "221":
                 break
 
             # prints the client output to server in stdout
