@@ -23,7 +23,7 @@ def server(HOST, PORT):
         s.listen()
         conn, addr = s.accept()
         with conn:
-            print("S: 220 Service ready")
+            print("S: 220 Service ready\r\n", end='')
             conn.send("220 Service ready".encode())
             while True:
                 # Receive client message
@@ -75,7 +75,6 @@ def main():
 
     host = "127.0.0.1"
     port = int(conf["server_port"])
-    print(port)
 
     server(host, port)
 
