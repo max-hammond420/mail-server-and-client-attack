@@ -61,6 +61,7 @@ def parse_mail(file):
 
     ls = merge_mail(ls, lines)
 
+    print("parse_mail done")
     return ls
 
 
