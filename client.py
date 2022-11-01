@@ -31,7 +31,7 @@ def mail(HOST, PORT, to_send):
                 break
 
             # prints the client output to server in stdout
-            print(f"C: {to_send[i]}\n")
+            print(f"C: {to_send[i]}\n", end='')
             # Send to server
             s.send((to_send[i]+"\r\n").encode("ascii", "ignore"))
 
