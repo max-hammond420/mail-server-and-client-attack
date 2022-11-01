@@ -16,6 +16,7 @@ def mail(HOST, PORT, to_send):
         # conn, addr = s.accept()
 
         for i in range(len(to_send)):
+            # TODO implement a wait for server response, and check server code
             s.send((to_send[i]+'\n').encode())
 
 
@@ -25,14 +26,12 @@ def merge_mail(ls1, ls2):
     ls1[4] = ls2[2:]
 
     ls = ls1
-    # print(ls2)
 
     # TODO
     # get to: emails
     send = re.findall("<.*?>", ls2[0])
     to = re.findall("<.*?>", ls2[1])
 
-    # print(ls)
     ls[1] = ["MAIL FROM:"+send[0]]
     for i in range(len(to)):
         ls[2].append("MAIL TO:"+to[i])
@@ -52,7 +51,6 @@ def parse_mail(file):
           [],
           ["."],
           ["QUIT"]]
-    print("file:", file)
     with open(file) as f:
         lines = f.readlines()
 
@@ -61,7 +59,6 @@ def parse_mail(file):
 
     ls = merge_mail(ls, lines)
 
-    print("parse_mail done")
     return ls
 
 
@@ -101,10 +98,7 @@ def main():
     for i in range(len(lines)):
         lines[i] = lines[i].strip()
 
-    # print(f"c: {lines}")
-
     conf = conv_dict(lines, '=')
-    print(conf)
 
     # use the conf file to get relevant information
     send_path = conf['send_path']
@@ -113,19 +107,13 @@ def main():
 
     to_send = []
 
-    # print(os.listdir(send_path))
-    print(os.listdir(send_path))
+    absolute_path = os.path.dirname(__file__)
+    send_path = absolute_path+send_path
     for filename in os.listdir(send_path):
-        print("filename: " + filename)
         path = os.path.join(send_path[1:], filename)
         path = path[1:]
-        print(path)
-        print("dir?", os.path.isdir(path))
-        print("file?", os.path.isfile(path))
         if os.path.isfile(path):
             to_send.append(parse_mail(path))
-
-    print(*to_send, sep='\n\n')
 
     for i in range(len(to_send)):
         mail(host, port, to_send[i])

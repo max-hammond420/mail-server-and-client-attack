@@ -20,6 +20,16 @@ def conv_dict(ls, delim):
 def server(HOST, PORT):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((HOST, PORT))
+        s.listen()
+        conn, addr = s.accept()
+        with conn:
+            print(f"Connected by {addr}")
+            while True:
+                data = conn.recv(1024)
+                print(data)
+                if not data:
+                    break
+                conn.sendall("220\n".encode())
 
 
 def main():
@@ -45,10 +55,12 @@ def main():
         lines[i] = lines[i].strip()
 
     conf = conv_dict(lines, '=')
-    print("conf:", conf)
 
     host = "127.0.0.1"
+    port = int(conf["server_port"])
+    print(port)
 
+    server(host, port)
 
 
 if __name__ == '__main__':
