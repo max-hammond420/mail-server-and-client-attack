@@ -41,8 +41,14 @@ def main():
     with open(conf) as f:
         lines = f.readlines()
 
+    for i in range(len(lines)):
+        lines[i] = lines[i].strip()
+
     conf = conv_dict(lines, '=')
-    print(conf)
+    print("conf:", conf)
+
+    host = "127.0.0.1"
+
 
 
 if __name__ == '__main__':
