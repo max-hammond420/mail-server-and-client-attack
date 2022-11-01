@@ -116,6 +116,7 @@ def main():
     # print(os.listdir(send_path))
     print(os.listdir(send_path))
     for filename in os.listdir(send_path):
+        print(filename)
         path = os.path.join(send_path[1:], filename)
         path = path[1:]
         print(path)
