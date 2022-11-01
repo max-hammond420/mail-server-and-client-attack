@@ -10,6 +10,7 @@ PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 
 def mail(HOST, PORT, to_send):
+
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, int(PORT)))
         # s.listen()
@@ -103,7 +104,8 @@ def connect():
 def main():
     if len(sys.argv) != 2:
         print("no conf supplied")
-        sys.exit("exit code 1")
+        print("exit code 1")
+        sys.exit()
 
     conf = sys.argv[1]
     if not os.path.isfile(conf):
