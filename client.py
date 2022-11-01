@@ -120,10 +120,10 @@ def main():
     conf = conv_dict(lines, '=')
 
     # use the conf file to get relevant information
-    if conf['send_path'] or conf['server_port']:
+    try:
         send_path = conf['send_path']
         port = conf['server_port']
-    else:
+    except KeyError:
         print("incomplete conf")
         sys.exit(2)
 
