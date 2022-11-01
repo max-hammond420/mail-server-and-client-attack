@@ -110,13 +110,13 @@ def main():
     host = "127.0.0.1"
 
     to_send = []
-    '''
+    
     for filename in os.listdir(send_path[1:]):
         path = os.path.join(send_path[1:], filename)
+        print(path)
         if os.path.isfile(path):
             to_send.append(parse_mail(path))
-    '''
-    parse_mail(send_path)
+    # parse_mail(send_path)
 
     print(*to_send, sep='\n\n')
 
