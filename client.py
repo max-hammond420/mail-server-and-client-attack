@@ -11,7 +11,10 @@ PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 def mail(HOST, PORT, to_send):
 
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as (s, err):
+        if err:
+            print("no server")
+            sys.exit(3)
         s.connect((HOST, int(PORT)))
         # s.listen()
         # conn, addr = s.accept()
