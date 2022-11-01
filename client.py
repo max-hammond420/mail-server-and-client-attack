@@ -11,35 +11,34 @@ PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 def mail(HOST, PORT, to_send):
 
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as (s, err):
-        if err:
-            print("no server")
-            sys.exit(3)
-        s.connect((HOST, int(PORT)))
-        # s.listen()
-        # conn, addr = s.accept()
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((HOST, int(PORT)))
+            # s.listen()
+            # conn, addr = s.accept()
 
-        # check for 220 code
+            # check for 220 code
 
-        for i in range(len(to_send)+1):
-            # TODO implement a wait for server response, and check server code
+            for i in range(len(to_send)+1):
+                # TODO implement a wait for server response, and check server code
 
-            # Waits for server response
-            data = s.recv(1024).decode()
-            # Prints server response
-            print(f"S: {data}", end='')
+                # Waits for server response
+                data = s.recv(1024).decode()
+                # Prints server response
+                print(f"S: {data}", end='')
 
-            # Do logic with data
-            data = data.split(' ')
-            if data[0] == "221":
-                break
+                # Do logic with data
+                data = data.split(' ')
+                if data[0] == "221":
+                    break
 
-            # prints the client output to server in stdout
-            print(f"C: {to_send[i]}\r\n", end='')
-            # Send to server
-            s.send((to_send[i]+"\r\n").encode("ascii", "ignore"))
-
-        s.close()
+                # prints the client output to server in stdout
+                print(f"C: {to_send[i]}\r\n", end='')
+                # Send to server
+                s.send((to_send[i]+"\r\n").encode("ascii", "ignore"))
+    except ConnectionRefusedError:
+        print("no server")
+        sys.exit(3)
 
 
 def merge_mail(ls1, ls2):
