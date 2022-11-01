@@ -106,7 +106,7 @@ def main():
 
     # use the conf file to get relevant information
     send_path = conf['send_path']
-    client_port = conf['client_port']
+    port = conf['server_port']
     host = "127.0.0.1"
 
     to_send = []
@@ -118,7 +118,7 @@ def main():
     print(*to_send, sep='\n\n')
 
     for i in range(len(to_send)):
-        mail(host, client_port, to_send[i])
+        mail(host, port, to_send[i])
 
 
 if __name__ == '__main__':
