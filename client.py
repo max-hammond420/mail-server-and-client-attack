@@ -95,8 +95,6 @@ def main():
 
     with open(conf) as f:
         lines = f.readlines()
-        print("client")
-        print(lines)
 
     for i in range(len(lines)):
         lines[i] = lines[i].strip()
@@ -104,6 +102,7 @@ def main():
     # print(f"c: {lines}")
 
     conf = conv_dict(lines, '=')
+    print(conf)
 
     # use the conf file to get relevant information
     send_path = conf['send_path']
