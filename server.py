@@ -29,16 +29,17 @@ def main():
     # additionally allow client authentication
     # allow multiple clients to connect simultaniously
     # terminate upon receiving a SIGNT signal
-    sys.exit()
+    if len(sys.argv) != 2:
+        print("no conf supplied")
+        sys.exit("exit code 1")
+
     conf = sys.argv[1]
+    if not os.path.isfile(conf):
+        print("invalid conf file")
+        sys.exit("exit code 2")
+
     with open(conf) as f:
         lines = f.readlines()
-        print("server")
-        print(lines)
-        sys.exit()
-
-    for i in range(len(lines)):
-        lines[i] = lines[i].strip()
 
     conf = conv_dict(lines, '=')
 
