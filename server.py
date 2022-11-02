@@ -51,12 +51,16 @@ def server(HOST, PORT, checkpoints):
                     print(f"S: {response}\r\n", end='')
                     conn.send((response+'\r\n').encode())
                     s.close()
-                elif data[0] == "ELHO" and data[1] == HOST:
-                    response = "250 " + HOST
+                elif data[0] == "ELHO":
+                    if (len(data) == 2):
+                        if data[1] == HOST:
+                            response = "250 " + HOST
+                        else:
+                            response = "501 Syntax error in parameters or arguments"
                 elif data[0] == 'MAIL' or data[0] == 'RCPT':
                     response = "250 Requested mail action"
                 else:
-                    response = "220"
+                    response = "221"
                 print(f"S: {response}\r\n", end='')
 
                 conn.send((response+'\r\n').encode())
