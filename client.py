@@ -34,8 +34,6 @@ def mail(HOST, PORT, to_send):
 
         # Do logic with data
         data = data.split(' ')
-        print("data:", data[0])
-        print(data[0] == "221")
         if data[0] == "221":
             break
 
