@@ -49,7 +49,7 @@ def server(HOST, PORT, checkpoints):
                     response = "220"
                 print(f"S {response}\r\n", end='')
 
-                conn.send(response.encode())
+                conn.send((response+'\r\n').encode())
 
 
 def main():
