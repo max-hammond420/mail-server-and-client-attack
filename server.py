@@ -24,7 +24,7 @@ def server(HOST, PORT):
         conn, addr = s.accept()
         with conn:
             print("S: 220 Service ready\r\n", end='')
-            conn.send("220 Service ready".encode())
+            conn.send("220 Service ready\r\n".encode())
             while True:
                 # Receive client message
                 data = conn.recv(1024).decode()
@@ -37,14 +37,12 @@ def server(HOST, PORT):
                 print(f"C: {data}\r\n", end='')
 
                 # Server response
-                print("S: ", end='')
-
                 # do logic with data
                 if data == "QUIT":
                     response = "221 Service closing transmission channel"
                 else:
                     response = "220"
-                print(response+'\r\n', end='')
+                print(f"S {response}\r\n", end='')
 
                 conn.send(response.encode())
 
