@@ -24,31 +24,22 @@ def mail(HOST, PORT, to_send):
     # check for 220 code
 
     data = s.recv(1024).decode()
-    print(data)
-    print(type(data))
-    data = data.split(' ')
+    data = data.spilt(' ')
     i = 0
     while data[0] != '221':
         # TODO implement a wait for server response, and check
         # server code
 
-        # Do logic with data
-        data = data.split(' ')
-        if data[0] == "221":
-            break
-
         # prints the client output to server in stdout
         print(f"C: {to_send[i]}\r\n", end='')
-
-        # check if there is no more information to send
-        if i > len(to_send[i]):
-            break
 
         # Send to server
         s.send((to_send[i]+"\r\n").encode("ascii", "ignore"))
 
         # Waits for server response
         data = s.recv(1024).decode()
+        # Do logic with data
+        data = data.split(' ')
         # Prints server response
         print(f"S: {data}", end='')
         i += 1
