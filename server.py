@@ -17,7 +17,7 @@ def conv_dict(ls, delim):
     return dic
 
 
-def server(HOST, PORT):
+def server(HOST, PORT, checkpoints):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((HOST, PORT))
         s.listen()
@@ -28,6 +28,7 @@ def server(HOST, PORT):
             while True:
                 # Receive client message
                 data = conn.recv(1024).decode()
+                data = data.strip()
 
                 # If no client says nothing, do nothing
                 if not data:
@@ -72,7 +73,16 @@ def main():
     host = "127.0.0.1"
     port = int(conf["server_port"])
 
-    server(host, port)
+    checkpoints = {'EHLO': False,
+                   'MAIL FROM': False,
+                   'RCPT TO': False,
+                   'DATA': False,
+                   '.': False,
+                   'QUIT': False}
+
+    test = [False, False, False, False, False, False]
+
+    server(host, port, checkpoints)
 
 
 if __name__ == '__main__':
