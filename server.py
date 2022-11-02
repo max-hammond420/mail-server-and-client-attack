@@ -21,7 +21,7 @@ def conv_dict(ls, delim):
     return dic
 
 
-def server_response(data):
+def server_response(data, checkpoints):
     # Returns a string of the response to the data
     return "221"
 
@@ -62,7 +62,7 @@ def server(HOST, PORT, checkpoints):
                     conn.send((response+'\r\n').encode())
                     s.close()
 
-                response = server_response(data)
+                response, checkpoints = server_response(data, checkpoints)
 
                 conn.send((response+'\r\n').encode())
 

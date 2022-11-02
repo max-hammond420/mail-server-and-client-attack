@@ -23,7 +23,8 @@ def mail(HOST, PORT, to_send):
 
     # check for 220 code
 
-    for i in range(len(to_send)+1):
+    i = 0
+    while True:
         # TODO implement a wait for server response, and check
         # server code
 
@@ -40,7 +41,11 @@ def mail(HOST, PORT, to_send):
         # prints the client output to server in stdout
         print(f"C: {to_send[i]}\r\n", end='')
         # Send to server
+        if i > len(to_send[i])-1:
+            break
+
         s.send((to_send[i]+"\r\n").encode("ascii", "ignore"))
+        i += 1
 
     s.close()
 
