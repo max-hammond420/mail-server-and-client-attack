@@ -43,6 +43,8 @@ def server(HOST, PORT, checkpoints):
                 # do logic with data
                 if data[0] == "QUIT":
                     response = "221 Service closing transmission channel"
+                elif data[0] == "ELHO" and data[1] == HOST:
+                    response = "250 " + HOST
                 elif data[0] == 'MAIL' or data[0] == 'RCPT':
                     response = "250 Requested mail action"
                 else:
