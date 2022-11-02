@@ -23,8 +23,13 @@ def server(HOST, PORT, checkpoints):
         s.listen()
         conn, addr = s.accept()
         with conn:
+            # Connection established
             print("S: 220 Service ready\r\n", end='')
             conn.send("220 Service ready\r\n".encode())
+
+            # authentication
+
+            # Mesasge loop
             while True:
                 # Receive client message
                 data = conn.recv(1024).decode()
@@ -43,13 +48,16 @@ def server(HOST, PORT, checkpoints):
                 # do logic with data
                 if data[0] == "QUIT":
                     response = "221 Service closing transmission channel"
+                    print(f"S: {response}\r\n", end='')
+                    conn.send((response+'\r\n').encode())
+                    s.close()
                 elif data[0] == "ELHO" and data[1] == HOST:
                     response = "250 " + HOST
                 elif data[0] == 'MAIL' or data[0] == 'RCPT':
                     response = "250 Requested mail action"
                 else:
                     response = "220"
-                print(f"S {response}\r\n", end='')
+                print(f"S: {response}\r\n", end='')
 
                 conn.send((response+'\r\n').encode())
 

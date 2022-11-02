@@ -31,7 +31,7 @@ def mail(HOST, PORT, to_send):
                 # Do logic with data
                 data = data.split(' ')
                 if data[0] == "221":
-                    break
+                    s.close()
 
                 # prints the client output to server in stdout
                 print(f"C: {to_send[i]}\r\n", end='')
@@ -137,7 +137,6 @@ def main():
             to_send.append(parse_mail(path))
         else:
             print("")
-
 
     for i in range(len(to_send)):
         mail(host, port, to_send[i])
