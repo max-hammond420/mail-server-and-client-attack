@@ -40,10 +40,12 @@ def mail(HOST, PORT, to_send):
 
         # prints the client output to server in stdout
         print(f"C: {to_send[i]}\r\n", end='')
-        # Send to server
-        if i > len(to_send[i])-1:
+
+        # check if there is no more information to send
+        if i > len(to_send[i]):
             break
 
+        # Send to server
         s.send((to_send[i]+"\r\n").encode("ascii", "ignore"))
         i += 1
 
