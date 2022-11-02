@@ -37,7 +37,7 @@ def mail(HOST, PORT, to_send):
         print("data:", data[0])
         print(data[0] == "221")
         if data[0] == "221":
-            s.close()
+            break
 
         # prints the client output to server in stdout
         print(f"C: {to_send[i]}\r\n", end='')
