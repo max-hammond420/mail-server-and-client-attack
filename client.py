@@ -24,7 +24,7 @@ def mail(HOST, PORT, to_send):
     # check for 220 code
 
     data = s.recv(1024).decode()
-    data = data.spilt(' ')
+    data = data.split(' ')
     i = 0
     while data[0] != '221':
         # TODO implement a wait for server response, and check
