@@ -34,7 +34,7 @@ def server(HOST, PORT):
                     continue
 
                 # Print out client message
-                print(f"C: {data}\r\n", end='')
+                print(f"C: {data}\n", end='')
 
                 # Server response
                 # do logic with data
@@ -48,12 +48,6 @@ def server(HOST, PORT):
 
 
 def main():
-    # TODO
-    # prepare for any incoming client connection
-    # receive emails from a client and save to disk
-    # additionally allow client authentication
-    # allow multiple clients to connect simultaniously
-    # terminate upon receiving a SIGNT signal
     if len(sys.argv) != 2:
         print("no conf supplied")
         sys.exit("exit code 1")

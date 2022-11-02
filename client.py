@@ -93,17 +93,6 @@ def conv_dict(ls, delim):
     return dic
 
 
-def connect():
-    # TODO
-    # 1. Create a socket
-    # 2. Connect to the server
-    # 3. Send the personal ID and secret to the server
-    # 4. Receive the response from the server
-    # 5. Print the response
-    # 6. Close the socket
-    pass
-
-
 def main():
     if len(sys.argv) != 2:
         print("no conf supplied")
@@ -134,6 +123,7 @@ def main():
 
     to_send = []
 
+    # Werid stuff to work work locally/remotely
     # absolute_path = os.path.dirname(__file__)
     # send_path = absolute_path+send_path
     if not os.path.isdir(send_path):
@@ -148,7 +138,6 @@ def main():
         else:
             print("")
 
-    # print(*to_send, sep="\n\n")
 
     for i in range(len(to_send)):
         mail(host, port, to_send[i])
