@@ -1,5 +1,5 @@
 server_port=2008
 client_port=1026
-inbox_path=/inbox
-send_path=/send
-spy_path=/spy
+inbox_path=/home/max/Documents/yr1/sem2/info1112/postman-impersonation/inbox
+send_path=/home/max/Documents/yr1/sem2/info1112/postman-impersonation/send
+spy_path=/home/max/Documents/yr1/sem2/info1112/postman-impersonation/spy

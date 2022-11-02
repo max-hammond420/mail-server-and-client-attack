@@ -8,6 +8,10 @@ PERSONAL_ID = 'F8D819'
 PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 
+def log_data(file, data):
+    pass
+
+
 def conv_dict(ls, delim):
     # converts ls into a dictionary, splitting by delim
     dic = {}
@@ -15,6 +19,11 @@ def conv_dict(ls, delim):
         ls[i] = ls[i].split(delim)
         dic[ls[i][0]] = ls[i][1]
     return dic
+
+
+def server_response(data):
+    # Returns a string of the response to the data
+    return "221"
 
 
 def server(HOST, PORT, checkpoints):
@@ -45,19 +54,15 @@ def server(HOST, PORT, checkpoints):
                 data = data.split(' ')
 
                 # Server response
-                # do logic with data
+                # do logic with data check if appropriate
+                # response and formulate send code
                 if data[0] == "QUIT":
                     response = "221 Service closing transmission channel"
                     print(f"S: {response}\r\n", end='')
                     conn.send((response+'\r\n').encode())
                     s.close()
-                elif data[0] == "ELHO":
-                    response = "250 " + HOST
-                elif data[0] == 'MAIL' or data[0] == 'RCPT':
-                    response = "250 Requested mail action"
-                else:
-                    response = "221"
-                print(f"S: {response}\r\n", end='')
+
+                response = server_response(data)
 
                 conn.send((response+'\r\n').encode())
 
