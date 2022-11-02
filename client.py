@@ -21,11 +21,12 @@ def mail(HOST, PORT, to_send):
     # s.listen()
     # conn, addr = s.accept()
 
-    # check for 220 code
-
+    # Receive the first message from the server
     data = s.recv(1024).decode()
     print(f"S: {data}", end='')
     data = data.split(' ')
+
+    # Send messages while there is no terminate (221) code
     i = 0
     while data[0] != '221':
         # TODO implement a wait for server response, and check

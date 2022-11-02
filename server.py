@@ -63,8 +63,8 @@ def server(HOST, PORT, checkpoints):
                     s.close()
 
                 response, checkpoints = server_response(data, checkpoints)
-                print(response)
-                print(checkpoints)
+                # print(response)
+                # print(checkpoints)
 
                 conn.send((response+'\r\n').encode())
 
@@ -99,7 +99,7 @@ def main():
 
     test = [False, False, False, False, False, False]
 
-    server(host, port, checkpoints)
+    server(host, port, test)
 
 
 if __name__ == '__main__':
