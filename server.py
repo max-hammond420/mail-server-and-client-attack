@@ -34,12 +34,16 @@ def server(HOST, PORT):
                     continue
 
                 # Print out client message
-                print(f"C: {data}\n", end='')
+                print(f"C: {data}\r\n", end='', flush=True)
+
+                data = data.split(' ')
 
                 # Server response
                 # do logic with data
-                if data == "QUIT":
+                if data[0] == "QUIT":
                     response = "221 Service closing transmission channel"
+                elif data[0] == 'MAIL' or data[0] == 'RCPT':
+                    response = "250 Requested mail action"
                 else:
                     response = "220"
                 print(f"S {response}\r\n", end='')
