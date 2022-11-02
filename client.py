@@ -30,6 +30,7 @@ def mail(HOST, PORT, to_send):
 
                 # Do logic with data
                 data = data.split(' ')
+                print("data:",data[0])
                 if data[0] == "221":
                     s.close()
 
