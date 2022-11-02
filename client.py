@@ -25,6 +25,7 @@ def mail(HOST, PORT, to_send):
 
     data = s.recv(1024).decode()
     data = data.split(' ')
+    print(F"S: {data}", end='')
     i = 0
     while data[0] != '221':
         # TODO implement a wait for server response, and check
