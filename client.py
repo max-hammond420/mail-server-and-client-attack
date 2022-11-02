@@ -38,10 +38,12 @@ def mail(HOST, PORT, to_send):
 
         # Waits for server response
         data = s.recv(1024).decode()
-        # Do logic with data
-        data = data.split(' ')
+
         # Prints server response
         print(f"S: {data}", end='')
+
+        # Do logic with data
+        data = data.split(' ')
         i += 1
 
     s.close()
