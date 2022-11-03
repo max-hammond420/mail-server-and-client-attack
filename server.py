@@ -23,7 +23,21 @@ def conv_dict(ls, delim):
 
 def server_response(data, checkpoints):
     # Returns a tuple of (response, updated_checkpoints)
-    return ("221", checkpoints)
+    response = "220"
+
+    # Use the checkpoints to determine where it is up to
+
+    # check EHLO
+
+    # check MAIL TO:
+
+    # check RCPT TO:
+
+    # check DATA:
+
+    # check QUIT:
+
+    return (response, checkpoints)
 
 
 def server(HOST, PORT, checkpoints):
@@ -60,7 +74,6 @@ def server(HOST, PORT, checkpoints):
                     response = "221 Service closing transmission channel"
                     print(f"S: {response}\r\n", end='')
                     conn.send((response+'\r\n').encode())
-                    s.close()
 
                 response, checkpoints = server_response(data, checkpoints)
                 # print(response)
