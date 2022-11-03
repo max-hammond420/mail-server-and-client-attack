@@ -46,7 +46,6 @@ def mail(HOST, PORT, to_send):
 
         # Do logic with data
         data = data.split(' ')
-        print(data[0] == '221')
         i += 1
 
     s.close()
