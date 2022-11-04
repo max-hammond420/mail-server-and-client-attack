@@ -1,12 +1,18 @@
+import hashlib
 import os
+import re
+import secrets
 import socket
 import sys
-import re
 
 
 # Visit https://edstem.org/au/courses/8961/lessons/26522/slides/196175 to get
 PERSONAL_ID = 'F8D819'
 PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
+
+# -- Generate random challenge -- #
+challenge = secrets.token_urlsafe(16)
+print("challenge:", challenge)
 
 
 def log_data(file, data):
@@ -58,7 +64,7 @@ def server_response(data, checkpoints, rcpt_check):
         # might have to check for a valid ipv4 address
         # but this works for now
         if data[1] == '127.0.0.1':
-            response = "250 " + data[1]
+            response = f"250 {data[1]}\r\nS: AUTH CRAM-MD5"
             checkpoints['EHLO'] = True
         else:
             response = "501 Syntax error in parameters or arguments"
@@ -125,7 +131,7 @@ def server(HOST, PORT, checkpoints):
         conn, addr = s.accept()
         with conn:
             # Connection established
-            print("S: 220 Service ready\r\n", end='')
+            print("S: 220 Service ready\r\n", end='', flush=True)
             conn.send("220 Service ready\r\n".encode())
 
             # authentication
@@ -150,7 +156,7 @@ def server(HOST, PORT, checkpoints):
                 # response and formulate send code
                 if data[0] == "QUIT":
                     response = "221 Service closing transmission channel"
-                    print(f"S: {response}\r\n", end='')
+                    print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
                     break
 
@@ -183,7 +189,7 @@ def main():
 
     host = "127.0.0.1"
     port = int(conf["server_port"])
-    # print(port)
+    write_path = conf['inbox_path']
 
     checkpoints = {'EHLO': False,
                    'MAIL': False,
@@ -191,8 +197,6 @@ def main():
                    'DATA': False,
                    '.': False,
                    'QUIT': False}
-
-    test = [False, False, False, False, False, False]
 
     server(host, port, checkpoints)
 

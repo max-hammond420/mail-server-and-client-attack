@@ -1,23 +1,26 @@
+import hashlib
 import os
+import re
 import socket
 import sys
-import re
 
 
 # Visit https://edstem.org/au/courses/8961/lessons/26522/slides/196175 to get
 PERSONAL_ID = 'F8D819'
 PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
+PERSONAL_SECRET_MD5 = hashlib.md5(PERSONAL_SECRET.encode())
+print(PERSONAL_SECRET_MD5.digest())
 
 
 def mail(HOST, PORT, to_send):
 
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
     try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((HOST, int(PORT)))
     except ConnectionRefusedError:
         print("no server")
         sys.exit(3)
-
-    s.connect((HOST, int(PORT)))
     # s.listen()
     # conn, addr = s.accept()
 
