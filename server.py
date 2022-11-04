@@ -1,6 +1,7 @@
 import os
 import socket
 import sys
+import re
 
 
 # Visit https://edstem.org/au/courses/8961/lessons/26522/slides/196175 to get
@@ -21,26 +22,103 @@ def conv_dict(ls, delim):
     return dic
 
 
-def server_response(data, checkpoints):
-    # Returns a tuple of (response, updated_checkpoints)
-    response = "220"
+def server_response(data, checkpoints, rcpt_check):
+    # Returns a tuple of (response, updated_checkpoints, rcpt_check)
+    code_220 = "220 Service ready"
+    code_221 = "221 Service closing transmission channel"
+    code_235 = "235 Authentication succeeded"
+    code_250 = "250 Requested mail action okay, completed"
+    code_334 = "334 Server BASE64-encoded challenge"
+    code_354 = "354 Start mail input; end with <CRLF>.<CRLF>"
+    code_421 = "421 Service not available, closing transmission channel"
+
+    code_500 = "500 Syntax error, command unrecognized"
+    code_501 = "501 Syntax error in parameters or arguments"
+    code_503 = "503 Bad sequence of commands"
+    code_504 = "504 Command parameter not implemented"
+    code_535 = "535 Authentication credentials invalid"
+
+    commands = ['EHLO', 'MAIL', 'RCPT', 'DATA', 'RSET', 'NOOP', 'AUTH', 'QUIT']
+
+    if data[0] not in commands:
+        response = code_500
 
     # Use the checkpoints to determine where it is up to
 
-    # check EHLO
+    if data[0] == 'RSET':
+        if len(data) == 1:
+            checkpoints = dict.fromkeys(checkpoints, False)
+        else:
+            response = code_501
 
-    # check MAIL TO:
+    # print(data)
+
+    # check EHLO
+    if data[0] == 'EHLO':
+        # might have to check for a valid ipv4 address
+        # but this works for now
+        if data[1] == '127.0.0.1':
+            response = "250 " + data[1]
+            checkpoints['EHLO'] = True
+        else:
+            response = "501 Syntax error in parameters or arguments"
+
+    # check MAIL FROM:
+    if checkpoints['EHLO'] is True:
+        if data[0] == 'MAIL':
+            # TODO check for a valid email address
+            # if data[2] == valid email address
+            if len(data) == 2:
+                response = code_250
+                checkpoints['MAIL'] = True
+            else:
+                response = code_501
 
     # check RCPT TO:
+    if checkpoints['MAIL'] is True:
+        if data[0] == 'RCPT':
+
+            # # TODO check for a valid email address
+            # if data[2] == valid email address
+            if len(data) == 2:
+                response = code_250
+                rcpt_check = True
+            else:
+                response = code_501
 
     # check DATA:
+    if data[0] == 'DATA' and rcpt_check is True:
+        if len(data) == 1:
+            response = code_354
+            checkpoints['RCPT'] = True
+            checkpoints['DATA'] = True
+        else:
+            response = code_501
+
+    if checkpoints['DATA'] is True and checkpoints['RCPT'] is True:
+        if data[0] == '.':
+            response = "250 Requested mail action okay completed"
+            checkpoints['.'] = True
+        if checkpoints['.'] is True:
+            if data[0] == 'QUIT':
+                response = code_221
+                checkpoints['QUIT'] = True
+        else:
+            response = code_354
+
+    # check .:
 
     # check QUIT:
+    if data[0] == 'QUIT':
+        response = "221 Service closing transmission channel"
 
-    return (response, checkpoints)
+    # print(checkpoints)
+
+    return (response, checkpoints, rcpt_check)
 
 
 def server(HOST, PORT, checkpoints):
+    rcpt_check = False
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((HOST, PORT))
         s.listen()
@@ -74,10 +152,13 @@ def server(HOST, PORT, checkpoints):
                     response = "221 Service closing transmission channel"
                     print(f"S: {response}\r\n", end='')
                     conn.send((response+'\r\n').encode())
+                    break
 
-                response, checkpoints = server_response(data, checkpoints)
+                response, checkpoints, rcpt_check = server_response(data, checkpoints, rcpt_check)
+
                 # print(response)
                 # print(checkpoints)
+                print(f"S: {response}\r\n", end='')
 
                 conn.send((response+'\r\n').encode())
 
@@ -102,17 +183,18 @@ def main():
 
     host = "127.0.0.1"
     port = int(conf["server_port"])
+    # print(port)
 
     checkpoints = {'EHLO': False,
-                   'MAIL FROM': False,
-                   'RCPT TO': False,
+                   'MAIL': False,
+                   'RCPT': False,
                    'DATA': False,
                    '.': False,
                    'QUIT': False}
 
     test = [False, False, False, False, False, False]
 
-    server(host, port, test)
+    server(host, port, checkpoints)
 
 
 if __name__ == '__main__':
