@@ -158,7 +158,7 @@ def server(HOST, PORT, checkpoints):
                     response = "221 Service closing transmission channel"
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
-                    break
+                    continue
 
                 response, checkpoints, rcpt_check = server_response(data, checkpoints, rcpt_check)
 
