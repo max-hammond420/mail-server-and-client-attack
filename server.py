@@ -64,7 +64,7 @@ def server_response(data, checkpoints, rcpt_check):
         # might have to check for a valid ipv4 address
         # but this works for now
         if data[1] == '127.0.0.1':
-            response = f"250 {data[1]}\r\nS: AUTH CRAM-MD5"
+            response = f"250 {data[1]}\r\nS: 250 AUTH CRAM-MD5"
             checkpoints['EHLO'] = True
         else:
             response = "501 Syntax error in parameters or arguments"
