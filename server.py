@@ -142,7 +142,6 @@ def server(HOST, PORT, checkpoints):
             while True:
                 # Receive client message
                 data = conn.recv(1024).decode()
-                data = data.strip()
 
                 # If no client says nothing, do nothing
                 if not data:
@@ -151,18 +150,19 @@ def server(HOST, PORT, checkpoints):
                 # Print out client message
                 print(f"C: {data}\r\n", end='', flush=True)
 
-                data = data.split(' ')
-
                 # Server response
                 # do logic with data check if appropriate
                 # response and formulate send code
+
+                print('|'+data[-1]+'|')
+                print('|'+data[-2]+'|')
+                data = data.split()
                 if data[0] == "QUIT":
                     response = "221 Service closing transmission channel"
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
                     continue
-
-                response, checkpoints, rcpt_check = server_response(data, checkpoints, rcpt_check)
+                response, checkpoints, rcpt_check = server_response(data.split(' '), checkpoints, rcpt_check)
 
                 # Check authentication
                 if checkpoints['EHLO'] is True and checkpoints['MAIL'] is False:
