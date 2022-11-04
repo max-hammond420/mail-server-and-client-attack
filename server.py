@@ -44,6 +44,8 @@ def server_response(data, checkpoints, rcpt_check):
     code_504 = "504 Command parameter not implemented"
     code_535 = "535 Authentication credentials invalid"
 
+    response = code_500
+
     commands = ['EHLO', 'MAIL', 'RCPT', 'DATA', 'RSET', 'NOOP', 'AUTH', 'QUIT']
 
     if data[0] not in commands:
@@ -161,6 +163,10 @@ def server(HOST, PORT, checkpoints):
                     continue
 
                 response, checkpoints, rcpt_check = server_response(data, checkpoints, rcpt_check)
+
+                # Check authentication
+                if checkpoints['EHLO'] is True and checkpoints['MAIL'] is False:
+                    pass
 
                 # print(response)
                 # print(checkpoints)
