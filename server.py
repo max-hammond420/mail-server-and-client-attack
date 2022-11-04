@@ -11,8 +11,8 @@ PERSONAL_ID = 'F8D819'
 PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 # -- Generate random challenge -- #
-challenge = secrets.token_urlsafe(16)
-print("challenge:", challenge)
+# challenge = secrets.token_urlsafe(16)
+# print("challenge:", challenge)
 
 
 def log_data(file, data):
