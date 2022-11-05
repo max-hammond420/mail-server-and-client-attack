@@ -60,6 +60,13 @@ def server_response(data, checkpoints, rcpt_check):
             response = code_501
 
     # print(data)
+    
+    # check NOOP
+    if data[0] == 'NOOP':
+        if len(data) == 1:
+            response = code_250
+        else:
+            response = code_501
 
     # check EHLO
     if data[0] == 'EHLO':
@@ -69,7 +76,7 @@ def server_response(data, checkpoints, rcpt_check):
             response = f"250 127.0.0.1\r\nS: 250 AUTH CRAM-MD5"
             checkpoints['EHLO'] = True
         else:
-            response = "501 Syntax error in parameters or arguments"
+            response = code_501
 
     # check MAIL FROM:
     if checkpoints['EHLO'] is True:
