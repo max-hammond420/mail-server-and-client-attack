@@ -38,9 +38,10 @@ def check_email(prefix, data):
     # should be ['prefix', '<email>']
     if len(data) == 2:
         if data[0] == prefix:
-            if data[1].match
+            # if data[1].match
+            pass
 
-    return (is_valid, email)
+    # return (is_valid, email)
 
 
 def server_response(data, checkpoints, rcpt_check):
@@ -104,11 +105,10 @@ def server_response(data, checkpoints, rcpt_check):
     # check MAIL FROM:
     if data[0] == 'MAIL':
         if checkpoints['EHLO'] is True and checkpoints['MAIL'] is False:
-        # print(checkpoints)
             # TODO check for a valid email address
             # if data[2] == valid email address
             if len(data) == 2:
-                check_email('TO', data[1])
+                # check_email('TO', data[1])
                 response = code_250
                 checkpoints['MAIL'] = True
             else:
@@ -123,7 +123,7 @@ def server_response(data, checkpoints, rcpt_check):
             # # TODO check for a valid email address
             # if data[2] == valid email address
             if len(data) == 2:
-                check_email('TO', data[1])
+                # check_email('TO', data[1])
                 response = code_250
                 rcpt_check = True
             else:
