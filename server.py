@@ -185,13 +185,13 @@ def server(HOST, PORT, checkpoints):
                 if checkpoints['EHLO'] is True and checkpoints['MAIL'] is False:
                     pass
 
+                conn.send((response+'\r\n').encode())
+
                 if '\r\n' in response:
                     response = response.split('\r\n')
                     print(f"S: {response[0]}\r\nS: {response[1]}\r\n")
                 else:
                     print(f"S: {response}\r\n", end='')
-
-                conn.send((response+'\r\n').encode())
 
 
 def main():
