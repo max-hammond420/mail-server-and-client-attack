@@ -1,3 +1,4 @@
+import socket
 import re
 
 
@@ -46,6 +47,7 @@ def check_email(prefix, data):
     return (is_valid, email)
 
 
-print(check_email("TO", "TO:<asdf@asfd.com>"))
-print(check_email("TO", "TO:<as.df@asfd.com>"))
-print(check_email("TO", "TO:asdfasdf@asdf"))
+try:
+    print(socket.inet_aton("127.0.0.11241"))
+except OSError:
+    print("invalid ip")
