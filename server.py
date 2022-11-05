@@ -80,7 +80,7 @@ def server_response(data, checkpoints, rcpt_check):
             response = code_501
 
     # check MAIL FROM:
-    if checkpoints['EHLO'] is True:
+    elif checkpoints['EHLO'] is True and checkpoints['MAIL'] is False:
         print(checkpoints)
         if data[0] == 'MAIL':
             # TODO check for a valid email address
@@ -92,7 +92,7 @@ def server_response(data, checkpoints, rcpt_check):
                 response = code_501
 
     # check RCPT TO:
-    if checkpoints['MAIL'] is True:
+    elif checkpoints['MAIL'] is True:
         if data[0] == 'RCPT':
 
             # # TODO check for a valid email address
