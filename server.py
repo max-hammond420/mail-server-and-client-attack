@@ -154,8 +154,9 @@ def server(HOST, PORT, checkpoints):
                 # do logic with data check if appropriate
                 # response and formulate send code
 
-                print('|'+data[-1]+'|')
-                print('|'+data[-2]+'|')
+                print("\\n ", data[-1] == '\n')
+                print("\\r ", data[-2] == '\r')
+                print("|" + data[-3] + "|")
                 data = data.split()
                 if data[0] == "QUIT":
                     response = "221 Service closing transmission channel"
