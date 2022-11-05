@@ -54,7 +54,6 @@ def mail(HOST, PORT, to_send):
         i += 1
 
     s.close()
-    sys.exit()
 
 
 def merge_mail(ls1, ls2):
