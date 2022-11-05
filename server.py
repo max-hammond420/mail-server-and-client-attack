@@ -55,7 +55,11 @@ def server_response(data, checkpoints, rcpt_check):
 
     if data[0] == 'RSET' and checkpoints['DATA'] is False:
         if len(data) == 1:
-            checkpoints = dict.fromkeys(checkpoints, False)
+            if checkpoints['EHLO'] is True:
+                checkpoints = dict.fromkeys(checkpoints, False)
+                checkpoints['EHLO'] = True
+            else:
+                checkpoints = dict.fromkeys(checkpoints, False)
             response = code_250
         else:
             response = code_501
