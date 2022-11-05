@@ -53,7 +53,7 @@ def server_response(data, checkpoints, rcpt_check):
 
     # Use the checkpoints to determine where it is up to
 
-    if data[0] == 'RSET':
+    if data[0] == 'RSET' and checkpoints['DATA'] is False:
         if len(data) == 1:
             checkpoints = dict.fromkeys(checkpoints, False)
             response = code_250
@@ -78,11 +78,10 @@ def server_response(data, checkpoints, rcpt_check):
             checkpoints['EHLO'] = True
         else:
             response = code_501
-
     # check MAIL FROM:
-    elif checkpoints['EHLO'] is True and checkpoints['MAIL'] is False:
+    if data[0] == 'MAIL':
+        if checkpoints['EHLO'] is True and checkpoints['MAIL'] is False:
         # print(checkpoints)
-        if data[0] == 'MAIL':
             # TODO check for a valid email address
             # if data[2] == valid email address
             if len(data) == 2:
@@ -90,10 +89,12 @@ def server_response(data, checkpoints, rcpt_check):
                 checkpoints['MAIL'] = True
             else:
                 response = code_501
+        else:
+            response = code_503
 
     # check RCPT TO:
-    elif checkpoints['MAIL'] is True:
-        if data[0] == 'RCPT':
+    if data[0] == 'RCPT':
+        if checkpoints['MAIL'] is True and checkpoints['RCPT'] is False:
 
             # # TODO check for a valid email address
             # if data[2] == valid email address
@@ -102,6 +103,8 @@ def server_response(data, checkpoints, rcpt_check):
                 rcpt_check = True
             else:
                 response = code_501
+        else:
+            response = code_503
 
     # check DATA:
     if data[0] == 'DATA' and rcpt_check is True:
