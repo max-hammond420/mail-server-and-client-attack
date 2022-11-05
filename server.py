@@ -28,6 +28,21 @@ def conv_dict(ls, delim):
     return dic
 
 
+def check_email(prefix, data):
+    # Checks if email is the form of prefix:<email>
+    # returns a tuple of (bool, email)
+    # email is none if bool is false
+    is_valid = False
+    email = None
+    data = data.split(':')
+    # should be ['prefix', '<email>']
+    if len(data) == 2:
+        if data[0] == prefix:
+            if data[1].match
+
+    return (is_valid, email)
+
+
 def server_response(data, checkpoints, rcpt_check):
     # Returns a tuple of (response, updated_checkpoints, rcpt_check)
     code_220 = "220 Service ready"
@@ -79,8 +94,11 @@ def server_response(data, checkpoints, rcpt_check):
         # might have to check for a valid ipv4 address
         # but this works for now
         if len(data) == 2:
-            response = f"250 127.0.0.1\r\n250 AUTH CRAM-MD5"
-            checkpoints['EHLO'] = True
+            if data[1] == "27.0.0.1":
+                response = f"250 27.0.0.1\r\n250 AUTH CRAM-MD5"
+                checkpoints['EHLO'] = True
+            else:
+                response = code_501
         else:
             response = code_501
     # check MAIL FROM:
@@ -90,6 +108,7 @@ def server_response(data, checkpoints, rcpt_check):
             # TODO check for a valid email address
             # if data[2] == valid email address
             if len(data) == 2:
+                check_email('TO', data[1])
                 response = code_250
                 checkpoints['MAIL'] = True
             else:
@@ -104,6 +123,7 @@ def server_response(data, checkpoints, rcpt_check):
             # # TODO check for a valid email address
             # if data[2] == valid email address
             if len(data) == 2:
+                check_email('TO', data[1])
                 response = code_250
                 rcpt_check = True
             else:
@@ -227,6 +247,7 @@ def main():
     conf = conv_dict(lines, '=')
 
     host = "127.0.0.1"
+
     port = int(conf["server_port"])
     write_path = conf['inbox_path']
 

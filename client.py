@@ -77,16 +77,17 @@ def merge_mail(ls1, ls2):
     return ls
 
 
-def parse_mail(file):
+def parse_mail(file, host):
     # reads a file and returns a list of line by line to send information
     # to server
-    ls = [["EHLO 127.0.0.1"],
+    ls = [[f"EHLO {host}"],
           [],
           [],
           ["DATA"],
           [],
           ["."],
           ["QUIT"]]
+
     with open(file) as f:
         lines = f.readlines()
 
@@ -148,7 +149,7 @@ def main():
         path = os.path.join(send_path, filename)
         path = path
         if os.path.isfile(path):
-            to_send.append(parse_mail(path))
+            to_send.append(parse_mail(path, host))
         else:
             print("")
 
