@@ -95,11 +95,11 @@ def server_response(data, checkpoints, rcpt_check):
         # might have to check for a valid ipv4 address
         # but this works for now
         if len(data) == 2:
-            if data[1] == "27.0.0.1":
-                response = f"250 27.0.0.1\r\n250 AUTH CRAM-MD5"
-                checkpoints['EHLO'] = True
-            else:
-                response = code_501
+            # if data[1] == "27.0.0.1":
+            response = f"250 27.0.0.1\r\n250 AUTH CRAM-MD5"
+            checkpoints['EHLO'] = True
+            # else:
+                # response = code_501
         else:
             response = code_501
     # check MAIL FROM:
