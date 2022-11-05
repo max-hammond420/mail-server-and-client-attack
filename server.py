@@ -154,16 +154,20 @@ def server(HOST, PORT, checkpoints):
                 # do logic with data check if appropriate
                 # response and formulate send code
 
-                print("\\n ", data[-1] == '\n')
-                print("\\r ", data[-2] == '\r')
-                print("|" + data[-3] + "|")
+                # print("\\n ", data[-1] == '\n')
+                # print("\\r ", data[-2] == '\r')
+                if data[-3] == ' ':
+                    response = "501 Syntax error in parameters or arguments"
+                    print(f"S: {response}\r\n", end='', flush=True)
+                    conn.send((response+'\r\n').encode())
+                    continue
                 data = data.split()
                 if data[0] == "QUIT":
                     response = "221 Service closing transmission channel"
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
                     continue
-                response, checkpoints, rcpt_check = server_response(data.split(' '), checkpoints, rcpt_check)
+                response, checkpoints, rcpt_check = server_response(data, checkpoints, rcpt_check)
 
                 # Check authentication
                 if checkpoints['EHLO'] is True and checkpoints['MAIL'] is False:
