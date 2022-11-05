@@ -1,4 +1,4 @@
-server_port=2008
+server_port=2010
 client_port=1026
 inbox_path=/home/max/Documents/yr1/sem2/info1112/postman-impersonation/inbox
 send_path=/home/max/Documents/yr1/sem2/info1112/postman-impersonation/send

@@ -166,7 +166,7 @@ def server(HOST, PORT, checkpoints):
                 # print("\\n ", data[-1] == '\n')
                 # print("\\r ", data[-2] == '\r')
                 # check if client msg contains \r\n and data[-3]is alpha
-                if not data[-3].isalnum() or data[-2]!='\r' or data[-1]!='\n':
+                if data[-3].isspace() or data[-2] != '\r' or data[-1] != '\n':
                     response = "501 Syntax error in parameters or arguments"
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
@@ -182,6 +182,7 @@ def server(HOST, PORT, checkpoints):
                     continue
 
                 response, checkpoints, rcpt_check = server_response(data, checkpoints, rcpt_check)
+                print(f"{data[0]}, {response}", flush=True)
 
                 # Check authentication
                 # if checkpoints['EHLO'] is True and checkpoints['MAIL'] is False:
