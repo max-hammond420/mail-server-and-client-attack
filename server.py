@@ -183,8 +183,8 @@ def server(HOST, PORT, checkpoints):
                 response, checkpoints, rcpt_check = server_response(data, checkpoints, rcpt_check)
 
                 # Check authentication
-                if checkpoints['EHLO'] is True and checkpoints['MAIL'] is False:
-                    pass
+                # if checkpoints['EHLO'] is True and checkpoints['MAIL'] is False:
+                #     pass
 
                 conn.send((response+'\r\n').encode())
 
