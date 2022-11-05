@@ -56,11 +56,12 @@ def server_response(data, checkpoints, rcpt_check):
     if data[0] == 'RSET':
         if len(data) == 1:
             checkpoints = dict.fromkeys(checkpoints, False)
+            response = code_250
         else:
             response = code_501
 
     # print(data)
-    
+
     # check NOOP
     if data[0] == 'NOOP':
         if len(data) == 1:
