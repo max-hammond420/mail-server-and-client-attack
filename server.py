@@ -112,13 +112,16 @@ def server_response(data, checkpoints, rcpt_check):
             response = code_503
 
     # check DATA:
-    if data[0] == 'DATA' and rcpt_check is True:
-        if len(data) == 1:
-            response = code_354
-            checkpoints['RCPT'] = True
-            checkpoints['DATA'] = True
+    if data[0] == 'DATA':
+        if rcpt_check is True:
+            if len(data) == 1:
+                response = code_354
+                checkpoints['RCPT'] = True
+                checkpoints['DATA'] = True
+            else:
+                response = code_501
         else:
-            response = code_501
+            response = code_503
 
     if checkpoints['DATA'] is True and checkpoints['RCPT'] is True:
         if data[0] == '.':
