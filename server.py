@@ -35,7 +35,7 @@ def server_response(data, checkpoints, rcpt_check):
     code_235 = "235 Authentication succeeded"
     code_250 = "250 Requested mail action okay completed"
     code_334 = "334 Server BASE64-encoded challenge"
-    code_354 = "354 Start mail input end with <CRLF>.<CRLF>"
+    code_354 = "354 Start mail input end <CRLF>.<CRLF>"
     code_421 = "421 Service not available, closing transmission channel"
 
     code_500 = "500 Syntax error, command unrecognized"
