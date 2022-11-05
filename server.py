@@ -65,7 +65,7 @@ def server_response(data, checkpoints, rcpt_check):
     if data[0] == 'EHLO':
         # might have to check for a valid ipv4 address
         # but this works for now
-        if len(data) == 2
+        if len(data) == 2:
             response = f"250 127.0.0.1\r\nS: 250 AUTH CRAM-MD5"
             checkpoints['EHLO'] = True
         else:
