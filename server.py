@@ -156,7 +156,7 @@ def server(HOST, PORT, checkpoints):
 
                 # print("\\n ", data[-1] == '\n')
                 # print("\\r ", data[-2] == '\r')
-                if data[-3] == ' ':
+                if not data[-3].isalnum():
                     response = "501 Syntax error in parameters or arguments"
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
