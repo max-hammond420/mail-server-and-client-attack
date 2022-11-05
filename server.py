@@ -60,6 +60,7 @@ def server_response(data, checkpoints, rcpt_check):
                 checkpoints['EHLO'] = True
             else:
                 checkpoints = dict.fromkeys(checkpoints, False)
+            rcpt_check = False
             response = code_250
         else:
             response = code_501
