@@ -189,9 +189,9 @@ def server(HOST, PORT, checkpoints):
 
                 if '\r\n' in response:
                     response = response.split('\r\n')
-                    print(f"S: {response[0]}\r\nS: {response[1]}")
+                    print(f"S: {response[0]}\r\nS: {response[1]}\r\n", end='', flush=True)
                 else:
-                    print(f"S: {response}\r\n", end='')
+                    print(f"S: {response}\r\n", end='', flush=True)
 
 
 def main():
