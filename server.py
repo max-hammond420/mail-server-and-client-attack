@@ -81,6 +81,7 @@ def server_response(data, checkpoints, rcpt_check):
 
     # check MAIL FROM:
     if checkpoints['EHLO'] is True:
+        print(checkpoints)
         if data[0] == 'MAIL':
             # TODO check for a valid email address
             # if data[2] == valid email address
