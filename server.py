@@ -161,8 +161,6 @@ def server(HOST, PORT, checkpoints):
                     response = "501 Syntax error in parameters or arguments"
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
-                    data = data.strip()
-                    print(f"C: {data}\r\n", end='', flush=True)
                     continue
                 data = data.strip()
                 data = data.split()
