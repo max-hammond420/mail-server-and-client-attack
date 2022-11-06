@@ -144,7 +144,7 @@ def server_response(data, checkpoints, rcpt_check):
     if data[0] == 'RCPT':
         if checkpoints['MAIL'] is True and checkpoints['RCPT'] is False:
 
-            # # TODO check for a valid email address
+            # TODO check for a valid email address
             # if data[2] == valid email address
             if len(data) == 2:
                 valid, rcpt_email = check_email('TO', data[1])
@@ -221,9 +221,6 @@ def server(HOST, PORT, checkpoints):
                 # do logic with data check if appropriate
                 # response and formulate send code
 
-                # print("\\n ", data[-1] == '\n')
-                # print("\\r ", data[-2] == '\r')
-                # check if client msg contains \r\n and data[-3]is alpha
                 if data[-3].isspace() or data[-2] != '\r' or data[-1] != '\n':
                     response = "501 Syntax error in parameters or arguments"
                     print(f"S: {response}\r\n", end='', flush=True)
@@ -241,6 +238,8 @@ def server(HOST, PORT, checkpoints):
 
                 response, checkpoints, rcpt_check = server_response(data, checkpoints, rcpt_check)
                 # print(f"{data[0]}, {response}", flush=True)
+                if response[:3] == '500' and (data[0].startswith('RCPT') or data[0].startswith('MAIL')):
+                    response = '501 Syntax error in parameters or arguments'
 
                 conn.send((response+'\r\n').encode())
 
