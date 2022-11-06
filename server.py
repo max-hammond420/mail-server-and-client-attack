@@ -61,10 +61,11 @@ def check_email(prefix, data):
     domain = f"[{let_dig}][.{let_dig}]+"
 
     test = f'<{dot_string}@{domain}>'
+    regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 
     if len(data) == 2:
         if data[0] == prefix:
-            email = re.search(test, data[1])
+            email = re.search(regex, data[1])
             if email:
                 is_valid = True
 
