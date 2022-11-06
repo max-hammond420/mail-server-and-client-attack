@@ -47,7 +47,21 @@ def check_email(prefix, data):
     return (is_valid, email)
 
 
-try:
-    print(socket.inet_aton("127.0.0.11241"))
-except OSError:
-    print("invalid ip")
+def valid_ipv4(address):
+    try:
+        socket.inet_pton(socket.AF_INET, address)
+    except AttributeError:  # no inet_pton here, sorry
+        try:
+            socket.inet_aton(address)
+        except socket.error:
+            return False
+        return address.count('.') == 3
+    except socket.error:  # not a valid address
+        return False
+
+    return True
+
+
+print(valid_ipv4('123.123.123.123'))
+print(valid_ipv4('0.0.0.0'))
+print(valid_ipv4('127.0.01'))
