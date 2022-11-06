@@ -122,6 +122,7 @@ def server_response(data, checkpoints, rcpt_check):
         # might have to check for a valid ipv4 address
         # but this works for now
         if len(data) == 2:
+            print("ipv4:", check_ipv4(data[1]))
             if check_ipv4(data[1]):
                 response = "250 127.0.0.1\r\n250 AUTH CRAM-MD5"
                 checkpoints['EHLO'] = True
