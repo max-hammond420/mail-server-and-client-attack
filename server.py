@@ -223,6 +223,7 @@ def server(HOST, PORT, checkpoints, file):
             # Connection established
             print("S: 220 Service ready\r\n", end='', flush=True)
             conn.send("220 Service ready\r\n".encode())
+            timestamp = int(time.time())
 
             # authentication
 
@@ -259,7 +260,6 @@ def server(HOST, PORT, checkpoints, file):
                     conn.send((response+'\r\n').encode())
 
                     # Log the data
-                    timestamp = int(time.time())
                     filename = file+'/'+str(timestamp)+'.txt'
                     log_data(filename, ls)
                     continue
