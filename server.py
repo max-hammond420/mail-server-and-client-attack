@@ -17,6 +17,7 @@ PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 
 def log_data(file, data):
+    os.makedirs(os.path.dirname(file), exist_ok=True)
     f = open(file, 'w')
     for line in data:
         f.write(line)
@@ -232,7 +233,7 @@ def server(HOST, PORT, checkpoints, file):
 
                 # If no client says nothing, do nothing
                 if not data:
-                    continue
+                    break
 
                 # Print out client message
                 print(f"C: {data}", end='', flush=True)
