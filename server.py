@@ -2,9 +2,9 @@ import hashlib
 import os
 import re
 import secrets
-
 import socket
 import sys
+import time
 
 
 # Visit https://edstem.org/au/courses/8961/lessons/26522/slides/196175 to get
@@ -17,7 +17,12 @@ PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 
 def log_data(file, data):
-    pass
+    f = open(file, 'w')
+    f.close()
+    f = open(file, 'a')
+    for line in data:
+        f.write(line)
+    f.close()
 
 
 def conv_dict(ls, delim):
@@ -207,7 +212,8 @@ def server_response(data, checkpoints, rcpt_check):
     return (response, checkpoints, rcpt_check)
 
 
-def server(HOST, PORT, checkpoints):
+def server(HOST, PORT, checkpoints, file):
+    ls = []
     rcpt_check = False
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -242,6 +248,8 @@ def server(HOST, PORT, checkpoints):
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
                     continue
+                
+                ls.append(data)
 
                 data = data.strip()
                 data = data.split()
@@ -250,6 +258,11 @@ def server(HOST, PORT, checkpoints):
                     response = "221 Service closing transmission channel"
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
+
+                    # Log the data
+                    timestamp = int(time.time())
+                    filename = file+'/'+str(timestamp)+'.txt'
+                    log_data(filename, ls)
                     continue
 
                 response, checkpoints, rcpt_check = server_response(data, checkpoints, rcpt_check)
@@ -288,8 +301,9 @@ def main():
         inbox_path = conf['inbox_path']
         port = int(conf['server_port'])
     except KeyError:
-        print("incomplete conf, ")
+        print("incomplete conf, server")
         sys.exit(2)
+
 
     host = "127.0.0.1"
 
@@ -301,7 +315,7 @@ def main():
                    'QUIT': False}
 
     try:
-        server(host, port, checkpoints)
+        server(host, port, checkpoints, inbox_path)
     except KeyboardInterrupt:
         print("\nS: SIGINT received, closing\r\n", end='', flush=True)
         sys.exit()
