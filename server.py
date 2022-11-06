@@ -62,7 +62,7 @@ def check_email(prefix, data):
     atom = f'[{let_dig}][{let_dig}-]*'
     dot_string = fr'{atom}(.{atom})*'
 
-    sub_domain = f'[{let_dig}]{ldh_str}'
+    sub_domain = f'[{let_dig}]+({ldh_str})'
     domain = rf'{sub_domain}*(\.{sub_domain})+'
 
     test = re.compile(f"<{dot_string}@{domain}>")
@@ -281,7 +281,6 @@ def main():
         lines[i] = lines[i].strip()
 
     conf = conv_dict(lines, '=')
-
     host = "127.0.0.1"
 
     port = int(conf["server_port"])

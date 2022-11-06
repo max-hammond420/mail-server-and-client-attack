@@ -31,7 +31,7 @@ def check_email(prefix, data):
     atom = f'[{let_dig}][{let_dig}-]*'
     dot_string = fr'{atom}(.{atom})*'
 
-    sub_domain = f'[{let_dig}]{ldh_str}'
+    sub_domain = f'[{let_dig}]+({ldh_str})'
     domain = fr'{sub_domain}*(\.{sub_domain})+'
 
     test = re.compile(f"<{dot_string}@{domain}>")
@@ -48,9 +48,6 @@ def check_email(prefix, data):
 
 
 print(check_email('TO', 'TO:<asdf@asdf.org>'))
-print(check_email('TO', 'TO:<bob@bob.org>'))
-print(check_email('TO', 'TO:<bob@bob.org.org.org>'))
-print(check_email('TO', 'TO: <bob@bob.org'))
-print(check_email('TO', 'TO:<boborg>'))
 print(check_email('TO', 'TO:<bob@-bob.org>'))
-print(check_email('TO', 'TO:<bob@boborg>'))
+print(check_email('TO', 'TO:<bob@-bob.org>'))
+print(check_email('TO', 'TO:<bob@bob-.org>'))
