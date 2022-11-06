@@ -20,7 +20,6 @@ def mail(HOST, PORT, to_send):
     try:
         s.connect((HOST, int(PORT)))
     except ConnectionRefusedError:
-        print("no server")
         sys.exit(3)
     # s.listen()
     # conn, addr = s.accept()
