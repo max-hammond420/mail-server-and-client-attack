@@ -109,7 +109,7 @@ def conv_dict(ls, delim):
 
 def main():
     if len(sys.argv) != 2:
-        print("no conf supplied")
+        print("no conf supplied, client")
         sys.exit(1)
 
     conf = sys.argv[1]
