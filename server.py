@@ -63,6 +63,7 @@ def check_email(prefix, data):
     dot_string = fr'{atom}(.{atom})*'
 
     sub_domain = f'[{let_dig}]+({ldh_str})'
+
     domain = rf'{sub_domain}*(\.{sub_domain})+'
 
     test = re.compile(f"<{dot_string}@{domain}>")
