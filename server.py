@@ -283,10 +283,15 @@ def main():
         lines[i] = lines[i].strip()
 
     conf = conv_dict(lines, '=')
-    host = "127.0.0.1"
 
-    port = int(conf["server_port"])
-    write_path = conf['inbox_path']
+    try:
+        inbox_path = conf['inbox_path']
+        port = int(conf['server_port'])
+    except KeyError:
+        print("incomplete conf, ")
+        sys.exit(2)
+
+    host = "127.0.0.1"
 
     checkpoints = {'EHLO': False,
                    'MAIL': False,

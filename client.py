@@ -130,7 +130,7 @@ def main():
         send_path = conf['send_path']
         port = conf['server_port']
     except KeyError:
-        print("incomplete conf")
+        print("incomplete conf, client")
         sys.exit(2)
 
     host = "127.0.0.1"
