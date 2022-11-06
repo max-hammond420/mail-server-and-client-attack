@@ -20,7 +20,7 @@ def log_data(file, data):
     timestamp = int(time.time())
     filename = file+'/'+str(timestamp)+'.txt'
     os.makedirs(os.path.dirname(filename), exist_ok=True)
-    f = open(file, 'w')
+    f = open(filename, 'w')
     for line in data:
         f.write(line)
     f.close()

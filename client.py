@@ -7,7 +7,7 @@ import sys
 
 
 # Visit https://edstem.org/au/courses/8961/lessons/26522/slides/196175 to get
-PERSONAL_ID = 'F8D819'
+PERSONAfilename = 'F8D819'
 PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 PERSONAL_SECRET_MD5 = hashlib.md5(PERSONAL_SECRET.encode())
 # print(PERSONAL_SECRET_MD5.digest())
@@ -109,12 +109,10 @@ def conv_dict(ls, delim):
 
 def main():
     if len(sys.argv) != 2:
-        # print("no conf supplied, client")
         sys.exit(1)
 
     conf = sys.argv[1]
     if not os.path.isfile(conf):
-        # print("invalid conf file, client")
         sys.exit(2)
 
     with open(conf) as f:
@@ -130,7 +128,6 @@ def main():
         send_path = conf['send_path']
         port = conf['server_port']
     except KeyError:
-        print("incomplete conf, client")
         sys.exit(2)
 
     host = "127.0.0.1"
