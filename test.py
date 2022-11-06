@@ -44,19 +44,18 @@ def check_email(prefix, data):
     let_dig = 'a-zA-Z0-9'
     ldh_str = f'[{let_dig}-]*[{let_dig}]'
     atom = f'[{let_dig}][{let_dig}-]*'
-    dot_string = f'({atom})*(.{atom})+'
+    dot_string = fr'{atom}(.{atom})*'
 
     sub_domain = f'[{let_dig}]{ldh_str}'
-    domain = f'{sub_domain}[.{sub_domain}]*'
+    domain = f'{sub_domain}(.{sub_domain})+'
 
-    test = re.compile(rf"<{dot_string}@{domain}")
-    regex = re.compile(r'<([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+    test = f"<{dot_string}@{domain}>"
 
     # should be ['prefix', '<email>']
     if len(data) == 2:
         if data[0] == prefix:
             # if data[1].match
-            email = re.findall(dot_string, data[1])
+            email = re.search(domain, data[1])
             if email:
                 is_valid = True
 
@@ -68,4 +67,4 @@ def check_email(prefix, data):
 # print(check_email('TO', 'TO:<bob@bob.org.org.org>'))
 # print(check_email('TO', 'TO: <bob@bob.org'))
 # print(check_email('TO', 'TO:<bob@boborg>'))
-print(check_email('TO', 'TO:asdf.asd.f'))
+print(check_email('TO', 'TO:<asdf@asdf.asd.f>'))

@@ -264,7 +264,7 @@ def server(HOST, PORT, checkpoints):
 
 
 def main():
-    if len(sys.argv) != 2:
+    if len(sys.argv) > 2:
         print("no conf supplied")
         sys.exit("exit code 1")
 

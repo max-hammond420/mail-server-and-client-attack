@@ -108,7 +108,7 @@ def conv_dict(ls, delim):
 
 
 def main():
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         print("no conf supplied")
         sys.exit(1)
 
