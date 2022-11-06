@@ -210,6 +210,7 @@ def server_response(data, checkpoints, rcpt_check):
 def server(HOST, PORT, checkpoints):
     rcpt_check = False
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((HOST, PORT))
         s.listen()
         conn, addr = s.accept()
@@ -267,7 +268,7 @@ def server(HOST, PORT, checkpoints):
 
 def main():
     if len(sys.argv) != 2:
-        print("no conf supplied, server")
+        print("no conf supplied")
         sys.exit(1)
 
     conf = sys.argv[1]
