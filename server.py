@@ -17,7 +17,9 @@ PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 
 def log_data(file, data):
-    os.makedirs(os.path.dirname(file), exist_ok=True)
+    timestamp = int(time.time())
+    filename = file+'/'+str(timestamp)+'.txt'
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
     f = open(file, 'w')
     for line in data:
         f.write(line)
@@ -223,7 +225,6 @@ def server(HOST, PORT, checkpoints, file):
             # Connection established
             print("S: 220 Service ready\r\n", end='', flush=True)
             conn.send("220 Service ready\r\n".encode())
-            timestamp = int(time.time())
 
             # authentication
 
@@ -260,8 +261,7 @@ def server(HOST, PORT, checkpoints, file):
                     conn.send((response+'\r\n').encode())
 
                     # Log the data
-                    filename = file+'/'+str(timestamp)+'.txt'
-                    log_data(filename, ls)
+                    log_data(file, ls)
                     continue
 
                 response, checkpoints, rcpt_check = server_response(data, checkpoints, rcpt_check)
