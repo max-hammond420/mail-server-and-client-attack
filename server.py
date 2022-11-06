@@ -268,12 +268,12 @@ def server(HOST, PORT, checkpoints):
 
 def main():
     if len(sys.argv) != 2:
-        print("no conf supplied")
+        print("no conf supplied, server")
         sys.exit(1)
 
     conf = sys.argv[1]
     if not os.path.isfile(conf):
-        print("invalid conf file")
+        print("invalid conf file, server")
         sys.exit(2)
 
     with open(conf) as f:
