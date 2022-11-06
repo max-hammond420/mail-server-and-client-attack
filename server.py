@@ -29,12 +29,18 @@ def conv_dict(ls, delim):
 
 
 def check_ipv4(ip):
-    flag = True
     try:
-        socket.inet_aton(ip)
-    except OSError:
-        flag = False
-    return flag
+        socket.inet_pton(socket.AF_INET, ip)
+    except AttributeError:  # no inet_pton here, sorry
+        try:
+            socket.inet_aton(ip)
+        except socket.error:
+            return False
+        return ip.count('.') == 3
+    except socket.error:  # not a valid address
+        return False
+
+    return True
 
 
 def check_email(prefix, data):
