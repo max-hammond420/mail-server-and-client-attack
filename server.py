@@ -18,8 +18,6 @@ PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 def log_data(file, data):
     f = open(file, 'w')
-    f.close()
-    f = open(file, 'a')
     for line in data:
         f.write(line)
     f.close()
