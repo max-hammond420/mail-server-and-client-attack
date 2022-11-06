@@ -296,7 +296,7 @@ def main():
     try:
         server(host, port, checkpoints)
     except KeyboardInterrupt:
-        print("S: SIGINT received, closing\r\n", end='', flush=True)
+        print("\nS: SIGINT received, closing\r\n", end='', flush=True)
         sys.exit()
 
 
