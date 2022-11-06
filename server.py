@@ -58,19 +58,20 @@ def check_email(prefix, data):
     data = data.split(':')
 
     let_dig = 'a-zA-Z0-9'
-    # ldh_str = f"[a-zA-Z0-9-]*[{let_dig}]"
+    ldh_str = f'[{let_dig}-]*[{let_dig}]'
     atom = f'[{let_dig}][{let_dig}-]*'
-    dot_string = f'{atom}[.{atom}]*'
+    dot_string = fr'{atom}(.{atom})*'
 
-    # sub_domain = f"[{let_dig}]*"
-    domain = rf"[{let_dig}][\.{let_dig}]+"
+    sub_domain = f'[{let_dig}]{ldh_str}'
+    domain = f'{sub_domain}*(.{sub_domain})+'
 
-    test = re.compile(r'<{dot_string}@{domain}>')
-    regex = re.compile(r'<([A-Za-z0-9]+[.-])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+>')
+    test = re.compile(f"<{dot_string}@{domain}>")
 
+    # should be ['prefix', '<email>']
     if len(data) == 2:
         if data[0] == prefix:
-            email = re.search(regex, data[1])
+            # if data[1].match
+            email = re.search(test, data[1])
             if email:
                 is_valid = True
 
@@ -264,7 +265,7 @@ def server(HOST, PORT, checkpoints):
 
 
 def main():
-    if len(sys.argv) > 2:
+    if len(sys.argv) < 2:
         print("no conf supplied")
         sys.exit("exit code 1")
 
