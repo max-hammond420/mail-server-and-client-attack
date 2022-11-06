@@ -42,30 +42,30 @@ def check_email(prefix, data):
     # mailbox = f"{dot_string}@{domain}"
 
     let_dig = 'a-zA-Z0-9'
-    # ldh_str = f"[{let_dig}-]*{let_dig}"
+    ldh_str = f'[{let_dig}-]*[{let_dig}]'
     atom = f'[{let_dig}][{let_dig}-]*'
-    dot_string = f'{atom}[.{atom}]*'
+    dot_string = f'({atom})*(.{atom})+'
 
-    # sub_domain = f"[{let_dig}][{let_dig}-]"
-    domain = fr'{atom}[.{atom}]*'
+    sub_domain = f'[{let_dig}]{ldh_str}'
+    domain = f'{sub_domain}[.{sub_domain}]*'
 
-    # test = f'<{dot_string}@{domain}>'
-    test = fr'([A-Za-z0-9]+[.-])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
-    regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+    test = re.compile(rf"<{dot_string}@{domain}")
+    regex = re.compile(r'<([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 
     # should be ['prefix', '<email>']
     if len(data) == 2:
         if data[0] == prefix:
             # if data[1].match
-            email = re.search(regex, data[1])
+            email = re.findall(dot_string, data[1])
             if email:
                 is_valid = True
 
     return (is_valid, email)
 
 
-print(check_email('TO', 'TO:<asdf@asdf.org>'))
-print(check_email('TO', 'TO:<bob@bob.org>'))
-print(check_email('TO', 'TO:<bob@bob.org.org.org>'))
-print(check_email('TO', 'TO: <bob@bob.org'))
-print(check_email('TO', 'TO:<bob@boborg>'))
+# print(check_email('TO', 'TO:<asdf@asdf.org>'))
+# print(check_email('TO', 'TO:<bob@bob.org>'))
+# print(check_email('TO', 'TO:<bob@bob.org.org.org>'))
+# print(check_email('TO', 'TO: <bob@bob.org'))
+# print(check_email('TO', 'TO:<bob@boborg>'))
+print(check_email('TO', 'TO:asdf.asd.f'))

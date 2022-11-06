@@ -2,6 +2,7 @@ import hashlib
 import os
 import re
 import secrets
+
 import socket
 import sys
 
@@ -26,6 +27,10 @@ def conv_dict(ls, delim):
         ls[i] = ls[i].split(delim)
         dic[ls[i][0]] = ls[i][1]
     return dic
+
+
+def compute_digest():
+    pass
 
 
 def check_ipv4(ip):
@@ -58,10 +63,10 @@ def check_email(prefix, data):
     dot_string = f'{atom}[.{atom}]*'
 
     # sub_domain = f"[{let_dig}]*"
-    domain = f"[{let_dig}][.{let_dig}]+"
+    domain = rf"[{let_dig}][\.{let_dig}]+"
 
-    test = f'<{dot_string}@{domain}>'
-    regex = re.compile(r'<([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+>')
+    test = re.compile(r'<{dot_string}@{domain}>')
+    regex = re.compile(r'<([A-Za-z0-9]+[.-])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+>')
 
     if len(data) == 2:
         if data[0] == prefix:
@@ -288,7 +293,11 @@ def main():
                    '.': False,
                    'QUIT': False}
 
-    server(host, port, checkpoints)
+    try:
+        server(host, port, checkpoints)
+    except KeyboardInterrupt:
+        print("S: SIGINT received, closing\r\n", end='', flush=True)
+        sys.exit()
 
 
 if __name__ == '__main__':
