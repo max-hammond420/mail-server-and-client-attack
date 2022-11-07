@@ -25,12 +25,15 @@ def convert_to_unixtime(date):
 
     hour = int(date[4][:2])
     minute = int(date[4][2:4])
+    seconds = int(date[4][4:6])
     day = int(date[1])
     month = date[2]
     year = int(date[3])
 
     month = datetime.strptime(month, '%b').month
-    date_time = datetime(year, month, day, hour, minute)
+    # print(date)
+    # print(year, month, day, hour, minute)
+    date_time = datetime(year, month, day, hour, minute, seconds)
     unixtime = int(time.mktime(date_time.timetuple()))
     return unixtime
 
