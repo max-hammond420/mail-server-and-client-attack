@@ -48,7 +48,6 @@ def log_data(file, data):
 
     filename = file+'/'+str(timestamp)+'.txt'
     os.makedirs(os.path.dirname(filename), exist_ok=True)
-    print(filename)
     f = open(filename, 'w')
     for line in data:
         f.write(line)
