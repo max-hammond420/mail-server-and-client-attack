@@ -90,6 +90,22 @@ def parse_mail(file, host):
     with open(file) as f:
         lines = f.readlines()
 
+    line_check = []
+    to_check = ['From', 'To', 'Date', 'Subject']
+    for line in lines:
+        line_check.append(line.split(':'))
+    flag = False
+    if len(line_check) < 4:
+        flag = True
+    else:
+        for i in range(len(to_check)):
+            if line_check[i][0] != to_check[i]:
+                flag = True
+    if flag:
+        path = os.path.abspath(file)
+        print(f"C: {path}: Bad formation")
+        sys.exit(0)
+
     for i in range(len(lines)):
         lines[i] = lines[i].strip()
 
@@ -148,12 +164,6 @@ def main():
             to_send.append(parse_mail(path, host))
 
     for i in range(len(to_send)):
-        if False:
-            pass
-        else:
-            path = os.path.abspath(path)
-            print(f"C: {path}: Bad formation")
-            sys.exit(0)
         mail(host, port, to_send[i])
 
 
