@@ -151,6 +151,7 @@ def main():
         if False:
             pass
         else:
+            path = os.path.abspath(path)
             print(f"C: {path}: Bad formation")
             sys.exit(0)
         mail(host, port, to_send[i])
