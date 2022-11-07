@@ -1,0 +1,5 @@
+EHLO 127.0.0.1
+MAIL FROM:<me@me.org>
+RCPT TO:<you@you.com>
+RCPT TO:<test@test.me>
+DATA

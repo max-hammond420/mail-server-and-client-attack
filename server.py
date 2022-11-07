@@ -17,6 +17,13 @@ PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 
 def log_data(file, data):
+    # get date in unix time
+    for i in range(len(data)):
+        if data[i].startswith('Date'):
+            data[i] = data[i].split(':', 1)
+            data[i][1] = data[i][1].strip()
+            print(data[i][1])
+
     timestamp = int(time.time())
     filename = file+'/'+str(timestamp)+'.txt'
     os.makedirs(os.path.dirname(filename), exist_ok=True)
@@ -208,8 +215,6 @@ def server_response(data, checkpoints, rcpt_check):
     if data[0] == 'QUIT':
         response = "221 Service closing transmission channel"
 
-    # print(checkpoints)
-
     return (response, checkpoints, rcpt_check)
 
 
@@ -249,7 +254,7 @@ def server(HOST, PORT, checkpoints, file):
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
                     continue
-                
+
                 ls.append(data)
 
                 data = data.strip()
