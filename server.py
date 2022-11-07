@@ -286,7 +286,10 @@ def server(HOST, PORT, checkpoints, file):
                     conn.send((response+'\r\n').encode())
 
                     # Log the data
-                    log_data(file, ls)
+                    for i in range(len(ls)):
+                        if ls[i].startswith("Date: "):
+                            log_data(file, ls)
+                            break
                     continue
 
                 response, checkpoints, rcpt_check = server_response(data, checkpoints, rcpt_check)
