@@ -20,6 +20,7 @@ def mail(HOST, PORT, to_send):
     try:
         s.connect((HOST, int(PORT)))
     except ConnectionRefusedError:
+        print("C: Cannot establish connection")
         sys.exit(3)
     # s.listen()
     # conn, addr = s.accept()
@@ -145,13 +146,12 @@ def main():
         path = path
         if os.path.isfile(path):
             to_send.append(parse_mail(path, host))
-        else:
-            print("")
 
     for i in range(len(to_send)):
         if False:
             pass
         else:
+            print(f"C: {path}: Bad formation")
             sys.exit(0)
         mail(host, port, to_send[i])
 
