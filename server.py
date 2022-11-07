@@ -1,3 +1,4 @@
+from datetime import datetime
 import hashlib
 import os
 import re
@@ -16,17 +17,38 @@ PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 # print("challenge:", challenge)
 
 
+def convert_to_unixtime(date):
+    # takes in date in rfc form and converts it to unix time
+
+    date = re.sub(r'[^\w\s]', '', date)
+    date = date.split(' ')
+
+    hour = int(date[4][:2])
+    minute = int(date[4][2:4])
+    day = int(date[1])
+    month = date[2]
+    year = int(date[3])
+
+    month = datetime.strptime(month, '%b').month
+    date_time = datetime(year, month, day, hour, minute)
+    unixtime = int(time.mktime(date_time.timetuple()))
+    return unixtime
+
+    # print(day, month, year, hour)
+
+
 def log_data(file, data):
     # get date in unix time
     for i in range(len(data)):
         if data[i].startswith('Date'):
-            data[i] = data[i].split(':', 1)
-            data[i][1] = data[i][1].strip()
-            print(data[i][1])
+            new_date = data[i]
+            new_date = new_date.split(':', 1)
+            new_date[1] = new_date[1].strip()
+            timestamp = convert_to_unixtime(new_date[1])
 
-    timestamp = int(time.time())
     filename = file+'/'+str(timestamp)+'.txt'
     os.makedirs(os.path.dirname(filename), exist_ok=True)
+    print(filename)
     f = open(filename, 'w')
     for line in data:
         f.write(line)
@@ -49,13 +71,13 @@ def compute_digest():
 def check_ipv4(ip):
     try:
         socket.inet_pton(socket.AF_INET, ip)
-    except AttributeError:  # no inet_pton here, sorry
+    except AttributeError:
         try:
             socket.inet_aton(ip)
         except socket.error:
             return False
         return ip.count('.') == 3
-    except socket.error:  # not a valid address
+    except socket.error:
         return False
 
     return True
@@ -76,7 +98,6 @@ def check_email(prefix, data):
     dot_string = fr'{atom}(.{atom})*'
 
     sub_domain = f'[{let_dig}]+({ldh_str})'
-
     domain = rf'{sub_domain}*(\.{sub_domain})+'
 
     test = re.compile(f"<{dot_string}@{domain}>")
@@ -240,7 +261,7 @@ def server(HOST, PORT, checkpoints, file):
 
                 # If no client says nothing, do nothing
                 if not data:
-                    break
+                    continue
 
                 # Print out client message
                 print(f"C: {data}", end='', flush=True)
@@ -307,7 +328,6 @@ def main():
     except KeyError:
         print("incomplete conf, server")
         sys.exit(2)
-
 
     host = "127.0.0.1"
 
