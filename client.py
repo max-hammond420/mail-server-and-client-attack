@@ -149,6 +149,10 @@ def main():
             print("")
 
     for i in range(len(to_send)):
+        if False:
+            pass
+        else:
+            sys.exit(0)
         mail(host, port, to_send[i])
 
 
