@@ -334,6 +334,7 @@ def server(HOST, PORT, checkpoints, file):
                     response = "235 Authentication successful\r\n"
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
+
                     continue
 
                 # If no client says nothing, do nothing
