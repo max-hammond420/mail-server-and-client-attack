@@ -1,0 +1,38 @@
+ehlo
+ehlooooo
+ehl
+ehlo   
+The AGPL License (AGPL)
+Copyright (c) 2022 Author. All rights reserved.
+This program  is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+ehlo 127.0.0.1
+MAIL TO:<test>
+MAIL TO:<123.123>
+MAIL TO:<asdf@asdf.com>
+MAIL FROM<ASDF@test.com>
+MAIL FROM:<bob@boboboa.com> <another@email.email>
+RCPT TO:<asdf-.-.>
+RCPT TO:<person>
+RCPT TO: <valid@email.com> <another@valid.email>
+RCPT TO<valid@email.com>
+RCPT TO:<nothing useful>
+RCPT TO:<another@valid.email>
+invalid commanad
+DATA
+DATE: this is a 2022-11-08
+Subject: nothing
+.
+QUTE
+QUITE
+QUIT with something else
+QUIT
+

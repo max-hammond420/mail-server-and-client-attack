@@ -1,0 +1,16 @@
+S: 220 Service ready
+C: EHLO nothing
+S: 501 Syntax error in parameters or arguments
+C: EHLO something
+S: 501 Syntax error in parameters or arguments
+C: EHLO
+S: 501 Syntax error in parameters or arguments
+C: EHLO 127.0.0.1
+S: 250 127.0.0.1
+S: 250 AUTH CRAM-MD5
+C: EHLO
+S: 501 Syntax error in parameters or arguments
+C: RSET
+S: 250 Requested mail action okay completed
+C: QUIT
+S: 221 Service closing transmission channel

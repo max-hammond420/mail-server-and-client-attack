@@ -1,0 +1,75 @@
+S: 220 Service ready
+C: ehlo
+S: 500 Syntax error, command unrecognized
+C: ehlooooo
+S: 500 Syntax error, command unrecognized
+C: ehl
+S: 500 Syntax error, command unrecognized
+C: ehlo
+S: 500 Syntax error, command unrecognized
+C: The AGPL License (AGPL)
+S: 500 Syntax error, command unrecognized
+C: Copyright (c) 2022 Author. All rights reserved.
+S: 500 Syntax error, command unrecognized
+C: This program  is free software: you can redistribute it and/or modify
+S: 500 Syntax error, command unrecognized
+C: it under the terms of the GNU Affero General Public License as
+S: 500 Syntax error, command unrecognized
+C: published by the Free Software Foundation, either version 3 of the
+S: 500 Syntax error, command unrecognized
+C: License, or (at your option) any later version.
+S: 500 Syntax error, command unrecognized
+C: This program is distributed in the hope that it will be useful,
+S: 500 Syntax error, command unrecognized
+C: but WITHOUT ANY WARRANTY; without even the implied warranty of
+S: 500 Syntax error, command unrecognized
+C: MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+S: 500 Syntax error, command unrecognized
+C: GNU Affero General Public License for more details.
+S: 500 Syntax error, command unrecognized
+C: You should have received a copy of the GNU Affero General Public License
+S: 500 Syntax error, command unrecognized
+C: along with this program. If not, see <http://www.gnu.org/licenses/>.
+S: 500 Syntax error, command unrecognized
+C: ehlo 127.0.0.1
+S: 500 Syntax error, command unrecognized
+C: MAIL TO:<test>
+S: 503 Bad sequence of commands
+C: MAIL TO:<123.123>
+S: 503 Bad sequence of commands
+C: MAIL TO:<asdf@asdf.com>
+S: 503 Bad sequence of commands
+C: MAIL FROM<ASDF@test.com>
+S: 503 Bad sequence of commands
+C: MAIL FROM:<bob@boboboa.com> <another@email.email>
+S: 503 Bad sequence of commands
+C: RCPT TO:<asdf-.-.>
+S: 503 Bad sequence of commands
+C: RCPT TO:<person>
+S: 503 Bad sequence of commands
+C: RCPT TO: <valid@email.com> <another@valid.email>
+S: 503 Bad sequence of commands
+C: RCPT TO<valid@email.com>
+S: 503 Bad sequence of commands
+C: RCPT TO:<nothing useful>
+S: 503 Bad sequence of commands
+C: RCPT TO:<another@valid.email>
+S: 503 Bad sequence of commands
+C: invalid commanad
+S: 500 Syntax error, command unrecognized
+C: DATA
+S: 503 Bad sequence of commands
+C: DATE: this is a 2022-11-08
+S: 500 Syntax error, command unrecognized
+C: Subject: nothing
+S: 500 Syntax error, command unrecognized
+C: .
+S: 500 Syntax error, command unrecognized
+C: QUTE
+S: 500 Syntax error, command unrecognized
+C: QUITE
+S: 500 Syntax error, command unrecognized
+C: QUIT with something else
+S: 221 Service closing transmission channel
+C: QUIT
+S: 221 Service closing transmission channel

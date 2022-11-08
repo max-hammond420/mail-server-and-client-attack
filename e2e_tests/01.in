@@ -1,0 +1,7 @@
+EHLO nothing
+EHLO something
+EHLO
+EHLO 127.0.0.1
+EHLO
+RSET
+QUIT
