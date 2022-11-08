@@ -309,7 +309,7 @@ def server(HOST, PORT, checkpoints, file):
                 digest = compute_digest(challenge)
 
                 # AUTH
-                
+
                 if data == "AUTH CRAM-MD5\r\n":
                     # Prompt client to challenge
                     response = f"334 {challenge}"
@@ -329,6 +329,8 @@ def server(HOST, PORT, checkpoints, file):
                         elif data == "QUIT":
                             break
                         elif data == "AUTH CRAM-MD5":
+                            challenge = generate_challenge()
+                            digest = compute_digest(challenge)
                             response = f"334 {challenge}"
                         else:
                             response = "535 Authentication credentials invalid"
