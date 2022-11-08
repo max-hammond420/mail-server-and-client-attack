@@ -321,6 +321,8 @@ def server(HOST, PORT, checkpoints, file):
                         data = conn.recv(1024).decode()
                         data = data.strip()
 
+                        print(f"C: {data}\r\n", end='', flush=True)
+
                         if data == digest:
                             response = "235 Authentication successful"
                             flag = False
