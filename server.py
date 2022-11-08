@@ -312,7 +312,7 @@ def server(HOST, PORT, checkpoints, file):
                     response = f"334 {challenge}"
                     # print(response)
                     print(f"S: {response}\r\n", end='', flush=True)
-                    # conn.send((response+'\r\n').encode())
+                    conn.send((response+'\r\n').encode())
                     data = conn.recv(1024).decode()
                     decoded_response = base64.b64decode(data)
                     a = compute_digest(challenge)
@@ -321,10 +321,8 @@ def server(HOST, PORT, checkpoints, file):
                     if data.strip() == a.strip():
                         print("yes cunt")
                     while data.strip() != a.strip():
-                        if data.strip() == a.strip():
-                            response = "235 Authentication successful\r\n"
-                        else:
-                            response = "535 Authentication credentials invalid"
+                        response = "535 Authentication credentials invalid"
+                        conn.send((response+'\r\n').encode())
                     response = "235 Authentication successful\r\n"
 
                 # If no client says nothing, do nothing
