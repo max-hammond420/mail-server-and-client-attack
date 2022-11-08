@@ -316,8 +316,10 @@ def server(HOST, PORT, checkpoints, file):
                     data = conn.recv(1024).decode()
                     decoded_response = base64.b64decode(data)
                     a = compute_digest(challenge)
-                    print(decoded_response)
-                    print(a)
+                    # print(a)
+                    data = conn.recv(1024).decode()
+                    if data.strip() == a.strip():
+                        response = "235 Authentication successful\r\n"
 
                 # If no client says nothing, do nothing
                 if not data:
