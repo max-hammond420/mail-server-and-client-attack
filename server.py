@@ -317,14 +317,17 @@ def server(HOST, PORT, checkpoints, file):
                     data = conn.recv(1024).decode()
 
                     a = compute_digest(challenge)
-                    print(a)
-                    print(data.strip())
+                    # print(a)
+                    # print(data.strip())
                     if data.strip() == a.strip():
                         print("yes cunt")
                     while data.strip() != a.strip():
                         response = "535 Authentication credentials invalid"
+                        print(f"S: {response}\r\n", end='', flush=True)
                         conn.send((response+'\r\n').encode())
                     response = "235 Authentication successful\r\n"
+                    print(f"S: {response}\r\n", end='', flush=True)
+                    conn.send((response+'\r\n').encode())
 
                 # If no client says nothing, do nothing
                 if not data:
