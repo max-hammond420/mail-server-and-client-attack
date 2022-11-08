@@ -338,6 +338,7 @@ def server(HOST, PORT, checkpoints, file):
 
                         continue
                     else:
+                        print("break")
                         break
 
                 # If no client says nothing, do nothing
