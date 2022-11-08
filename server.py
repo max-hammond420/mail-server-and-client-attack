@@ -305,26 +305,24 @@ def server(HOST, PORT, checkpoints, file):
             while True:
                 # Receive client message
                 data = conn.recv(1024).decode()
+                challenge = generate_challenge()
+                digest = compute_digest(challenge)
 
                 # AUTH
                 while True:
                     if data == "AUTH CRAM-MD5\r\n":
-                        challenge = generate_challenge()
                         response = f"334 {challenge}"
-                        # print(response)
+
                         print(f"S: {response}\r\n", end='', flush=True)
                         conn.send((response+'\r\n').encode())
 
                         data = conn.recv(1024).decode()
 
-                        a = compute_digest(challenge)
-                        print(a)
-                        print(data.strip())
-                        if data.strip() == "AUTH CRAM-MD5":
-                            continue
-                        if data.strip() == a.strip():
+                        if data.strip() == digest.strip():
                             print("yes cunt")
                         while data.strip() != a.strip():
+                            if data.strip() == "AUTH CRAM-MD5":
+                                continue
                             response = "535 Authentication credentials invalid"
                             print(f"S: {response}\r\n", end='', flush=True)
                             conn.send((response+'\r\n').encode())
