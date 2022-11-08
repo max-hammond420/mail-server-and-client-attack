@@ -322,7 +322,7 @@ def server(HOST, PORT, checkpoints, file):
                         data = data.strip()
 
                         if data == digest:
-                            response = "334 Authentication successful"
+                            response = "235 Authentication successful"
                             flag = False
                         elif data == "QUIT":
                             break
