@@ -317,8 +317,8 @@ def server(HOST, PORT, checkpoints, file):
                     data = conn.recv(1024).decode()
 
                     a = compute_digest(challenge)
-                    # print(a)
-                    # print(data.strip())
+                    print(a)
+                    print(data.strip())
                     if data.strip() == a.strip():
                         print("yes cunt")
                     while data.strip() != a.strip():
@@ -329,6 +329,7 @@ def server(HOST, PORT, checkpoints, file):
                         if data.strip() == "QUIT":
                             data = data.strip()
                             break
+                        print(data.strip())
                         print(f"C: {data}", end='', flush=True)
                     response = "235 Authentication successful\r\n"
                     print(f"S: {response}\r\n", end='', flush=True)
