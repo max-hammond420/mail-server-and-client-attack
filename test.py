@@ -33,8 +33,9 @@ def compute_digest(challenge):
         print('str')
     else:
         print("asdf")
-    PERSONAL_SECRET_MD5 = hashlib.md5(message_bytes).hexdigest()
-    PERSONAL_SECRET_MD5 = hmac.new(PERSONAL_SECRET, message_bytes, md5)
+    PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
+    # PERSONAL_SECRET_MD5 = hashlib.md5(message_bytes).hexdigest()
+    PERSONAL_SECRET_MD5 = hmac.new(b'44c42ab54ed4c444130f09261509f85b', challenge.encode(), hashlib.md5).hexdigest()
     return PERSONAL_SECRET_MD5
     # to_send = PERSONAL_ID + ' ' + PERSONAL_SECRET_MD5
     # to_send = to_send.encode('ascii')
@@ -45,3 +46,5 @@ def compute_digest(challenge):
 
 # a = generate_challenge()
 a = generate_challenge()
+b = compute_digest(a)
+print(b)
