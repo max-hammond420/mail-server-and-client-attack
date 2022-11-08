@@ -1,7 +1,6 @@
 from datetime import datetime
 import base64
 import hashlib
-import hmac
 import os
 import random
 import re
@@ -99,8 +98,7 @@ def compute_digest(challenge):
     base64_bytes = challenge.encode('ascii')
     message_bytes = base64.b64decode(base64_bytes)
     message = message_bytes.decode('ascii')
-    PERSONAL_SECRET_MD5 = hashlib.md5(message_bytes).hexdigest()
-    PERSONAL_SECRET_MD5 = hmac.new(PERSONAL_SECRET, message_bytes, 'md5')
+    PERSONAL_SECRET_MD5 = hashlib.md5(challenge.encode()).hexdigest()
     to_send = PERSONAL_ID + ' ' + PERSONAL_SECRET_MD5
     to_send = to_send.encode('ascii')
     base64_bytes = base64.b64encode(to_send)
