@@ -1,6 +1,7 @@
 from datetime import datetime
 import hashlib
 import os
+import random
 import re
 import secrets
 import socket
@@ -91,8 +92,12 @@ def conv_dict(ls, delim):
     return dic
 
 
-def compute_digest():
-    pass
+def generate_challenge():
+    # returns a string that is 16 <= len <= 128 bytes
+    bytes = random.randint(16, 128)
+    challenge = secrets.token_hex(bytes)
+    print(challenge)
+    return str
 
 
 def check_ipv4(ip):
@@ -286,9 +291,11 @@ def server(HOST, PORT, checkpoints, file):
 
                 # AUTH
                 if data == "AUTH CRAM-MD5\r\n":
-                    response = "334 test"
+                    challenge = generate_challenge
+                    response = f"334 {challenge}"
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
+                    data = conn.recv(1024).decode()
 
                 # If no client says nothing, do nothing
                 if not data:
