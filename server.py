@@ -1,4 +1,5 @@
 from datetime import datetime
+import base64
 import hashlib
 import os
 import random
@@ -293,7 +294,7 @@ def server(HOST, PORT, checkpoints, file):
 
                 # AUTH
                 if data == "AUTH CRAM-MD5\r\n":
-                    challenge = generate_challenge
+                    challenge = generate_challenge()
                     response = f"334 {challenge}"
                     print(response)
                     print(f"S: {response}\r\n", end='', flush=True)
