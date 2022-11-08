@@ -329,8 +329,8 @@ def server(HOST, PORT, checkpoints, file):
                         elif data == "QUIT":
                             break
                         elif data == "AUTH CRAM-MD5\r\n":
+                            print("test3")
                             response = f"334 {challenge}"
-                            continue
                         else:
                             response = "535 Authentication credentials invalid"
                         print(f"S: {response}\r\n", end='', flush=True)
