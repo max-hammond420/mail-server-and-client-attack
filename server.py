@@ -327,6 +327,7 @@ def server(HOST, PORT, checkpoints, file):
                         conn.send((response+'\r\n').encode())
                         data = conn.recv(1024).decode()
                         if data.strip() == "QUIT":
+                            data = data.strip()
                             break
                         print(f"C: {data}", end='', flush=True)
                     response = "235 Authentication successful\r\n"
