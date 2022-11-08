@@ -326,7 +326,7 @@ def server(HOST, PORT, checkpoints, file):
                         print(f"S: {response}\r\n", end='', flush=True)
                         conn.send((response+'\r\n').encode())
                         data = conn.recv(1024).decode()
-                        print(data.strip())
+                        print(f"client: {data.strip()}")
                         if data.strip() == "QUIT":
                             data = data.strip()
                             break
