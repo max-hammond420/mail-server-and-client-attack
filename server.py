@@ -93,6 +93,19 @@ def conv_dict(ls, delim):
     return dic
 
 
+def compute_digest(challenge):
+    # computets the digest that is supposed to come from the client
+    base64_bytes = challenge.encode('ascii')
+    message_bytes = base64.b64decode(base64_bytes)
+    message = message_bytes.decode('ascii')
+    PERSONAL_SECRET_MD5 = hashlib.md5(message.encode())
+    to_send = PERSONAL_ID + PERSONAL_SECRET_MD5
+    to_send = to_send.encode('ascii')
+    base64_bytes = base64.b64encode(to_send)
+    base64_message = base64_bytes.decode('ascii')
+    return base64_message
+
+
 def generate_challenge():
     # returns a string that is 16 <= len <= 128 bytes
     bytes = random.randint(16, 128)
@@ -301,7 +314,9 @@ def server(HOST, PORT, checkpoints, file):
                     conn.send((response+'\r\n').encode())
                     data = conn.recv(1024).decode()
                     decoded_response = base64.b64decode(data)
+                    a = compute_digest(challenge)
                     print(decoded_response)
+                    print(a)
 
                 # If no client says nothing, do nothing
                 if not data:
