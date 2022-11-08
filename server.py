@@ -296,10 +296,12 @@ def server(HOST, PORT, checkpoints, file):
                 if data == "AUTH CRAM-MD5\r\n":
                     challenge = generate_challenge()
                     response = f"334 {challenge}"
-                    print(response)
+                    # print(response)
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
                     data = conn.recv(1024).decode()
+                    decoded_response = base64.b64decode(data)
+                    print(decoded_response)
 
                 # If no client says nothing, do nothing
                 if not data:
