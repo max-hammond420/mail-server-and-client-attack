@@ -23,7 +23,13 @@ def compute_digest(challenge):
     base64_bytes = challenge.encode('ascii')
     message_bytes = base64.b64decode(base64_bytes)
     message = message_bytes.decode('ascii')
-    PERSONAL_SECRET_MD5 = hashlib.md5(message.encode()).hexdigest()
+    if isinstance(message_bytes, bytes):
+        print('bytes')
+    elif isinstance(message_bytes, str):
+        print('str')
+    else:
+        print("asdf")
+    PERSONAL_SECRET_MD5 = hashlib.md5(message_bytes).hexdigest()
     to_send = PERSONAL_ID + PERSONAL_SECRET_MD5
     to_send = to_send.encode('ascii')
     base64_bytes = base64.b64encode(to_send)
@@ -31,7 +37,8 @@ def compute_digest(challenge):
     return base64_message
 
 
-a = generate_challenge()
+# a = generate_challenge()
+a = 'NWUxYzc2MzJhNTAzODMzZWQxODhkNWZiNWYwMTA2OWQ2ZjVmNmJiYTY5M2NkYTJhNzZhMDNiNWM1ZmI3NWI='
 print(a)
 
 b = compute_digest(a)
