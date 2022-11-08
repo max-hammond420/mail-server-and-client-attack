@@ -78,7 +78,7 @@ def log_data(file, data):
     f = open(filename, 'w')
     to_log_data = parse_complete_email_to_log(data)
     for line in to_log_data:
-        f.write(line)
+        f.write(line+'\n')
     f.close()
 
 
