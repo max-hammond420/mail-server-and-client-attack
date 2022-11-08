@@ -319,7 +319,13 @@ def server(HOST, PORT, checkpoints, file):
                     # print(a)
                     data = conn.recv(1024).decode()
                     if data.strip() == a.strip():
-                        response = "235 Authentication successful\r\n"
+                        print("yes cunt")
+                    while data.strip() != a.strip():
+                        if data.strip() == a.strip():
+                            response = "235 Authentication successful\r\n"
+                        else:
+                            response = "535 Authentication credentials invalid"
+                    response = "235 Authentication successful\r\n"
 
                 # If no client says nothing, do nothing
                 if not data:
