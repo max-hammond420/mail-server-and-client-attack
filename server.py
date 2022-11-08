@@ -325,6 +325,8 @@ def server(HOST, PORT, checkpoints, file):
                         response = "535 Authentication credentials invalid"
                         print(f"S: {response}\r\n", end='', flush=True)
                         conn.send((response+'\r\n').encode())
+                        data = conn.recv(1024.decode())
+                        print(f"C: {data}", end='', flush=True)
                     response = "235 Authentication successful\r\n"
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
