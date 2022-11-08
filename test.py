@@ -1,6 +1,11 @@
 import secrets
-import random
+import hashlib
 import base64
+import random
+
+
+PERSONAL_ID = 'F8D819'
+PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 
 
 def generate_challenge():
@@ -13,5 +18,21 @@ def generate_challenge():
     return base64_message
 
 
+def compute_digest(challenge):
+    # computets the digest that is supposed to come from the client
+    base64_bytes = challenge.encode('ascii')
+    message_bytes = base64.b64decode(base64_bytes)
+    message = message_bytes.decode('ascii')
+    PERSONAL_SECRET_MD5 = hashlib.md5(message.encode()).hexdigest()
+    to_send = PERSONAL_ID + PERSONAL_SECRET_MD5
+    to_send = to_send.encode('ascii')
+    base64_bytes = base64.b64encode(to_send)
+    base64_message = base64_bytes.decode('ascii')
+    return base64_message
+
+
 a = generate_challenge()
 print(a)
+
+b = compute_digest(a)
+print(b)
