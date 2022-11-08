@@ -17,6 +17,30 @@ PERSONAL_SECRET = '44c42ab54ed4c444130f09261509f85b'
 # print("challenge:", challenge)
 
 
+def parse_complete_email_to_log(data):
+    # takes in a list of the completed email and
+    # returns a list of each line to output in the file
+    base = ["From: ",
+            "To: "]
+
+    for i in range(len(data)):
+        if data[i].startswith("MAIL FROM:"):
+            email = re.findall("<.*?>", data[i])
+            base[0] += email[0]
+        if data[i].startswith("RCPT TO:"):
+            emails = re.findall("<.*?>", data[i])
+            for email in emails:
+                base[1] += email+','
+        if data[i].startswith("Date:"):
+            while data[i] != '.\r\n':
+                base.append(data[i].strip())
+                i += 1
+            break
+
+    base[1] = base[1][:-1]
+    return base
+
+
 def convert_to_unixtime(date):
     # takes in date in rfc form and converts it to unix time
 
@@ -52,7 +76,8 @@ def log_data(file, data):
     filename = file+'/'+str(timestamp)+'.txt'
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     f = open(filename, 'w')
-    for line in data:
+    to_log_data = parse_complete_email_to_log(data)
+    for line in to_log_data:
         f.write(line)
     f.close()
 
