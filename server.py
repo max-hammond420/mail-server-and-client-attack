@@ -305,36 +305,42 @@ def server(HOST, PORT, checkpoints, file):
             while True:
                 # Receive client message
                 data = conn.recv(1024).decode()
-                challenge = generate_challenge()
-                digest = compute_digest(challenge)
 
                 # AUTH
-                if data == "AUTH CRAM-MD5\r\n":
-                    response = f"334 {challenge}"
+                while True:
+                    if data == "AUTH CRAM-MD5\r\n":
+                        challenge = generate_challenge()
+                        response = f"334 {challenge}"
 
-                    print(f"S: {response}\r\n", end='', flush=True)
-                    conn.send((response+'\r\n').encode())
-
-                    data = conn.recv(1024).decode()
-
-                    if data.strip() == digest.strip():
-                        print("yes cunt")
-                    while data.strip() != digest.strip():
-
-                        response = "535 Authentication credentials invalid"
                         print(f"S: {response}\r\n", end='', flush=True)
                         conn.send((response+'\r\n').encode())
+
                         data = conn.recv(1024).decode()
 
-                        print(f"client: {data.strip()}")
+                        a = compute_digest(challenge)
+                        print(a)
+                        print(data.strip())
+                        if data.strip() == "AUTH CRAM-MD5":
+                            continue
+                        if data.strip() == a.strip():
+                            print("yes cunt")
+                        while data.strip() != a.strip():
+                            response = "535 Authentication credentials invalid"
+                            print(f"S: {response}\r\n", end='', flush=True)
+                            conn.send((response+'\r\n').encode())
+                            data = conn.recv(1024).decode()
+                            print(f"client: {data.strip()}")
+                            if data.strip() == "QUIT":
+                                data = data.strip()
+                                break
+                            print(f"C: {data}", end='', flush=True)
+                        response = "235 Authentication successful\r\n"
+                        print(f"S: {response}\r\n", end='', flush=True)
+                        conn.send((response+'\r\n').encode())
 
-                        if data.strip() == "QUIT":
-                            data = data.strip()
-                            break
-                        print(f"C: {data}", end='', flush=True)
-                    response = "235 Authentication successful\r\n"
-                    print(f"S: {response}\r\n", end='', flush=True)
-                    conn.send((response+'\r\n').encode())
+                        continue
+                    else:
+                        break
 
                 # If no client says nothing, do nothing
                 if not data:
@@ -356,6 +362,7 @@ def server(HOST, PORT, checkpoints, file):
                 ls.append(data)
 
                 data = data.strip()
+                data = data.split()
 
                 if data[0] == "QUIT":
                     response = "221 Service closing transmission channel"
