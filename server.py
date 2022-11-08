@@ -313,11 +313,12 @@ def server(HOST, PORT, checkpoints, file):
                     # print(response)
                     print(f"S: {response}\r\n", end='', flush=True)
                     conn.send((response+'\r\n').encode())
+
                     data = conn.recv(1024).decode()
-                    decoded_response = base64.b64decode(data)
+
                     a = compute_digest(challenge)
-                    # print(a)
-                    data = conn.recv(1024).decode()
+                    print(a)
+                    print(data.strip())
                     if data.strip() == a.strip():
                         print("yes cunt")
                     while data.strip() != a.strip():
