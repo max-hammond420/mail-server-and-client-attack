@@ -99,8 +99,7 @@ def compute_digest(challenge):
     base64_bytes = challenge.encode('ascii')
     message_bytes = base64.b64decode(base64_bytes)
     message = message_bytes.decode('ascii')
-    PERSONAL_SECRET_MD5 = hashlib.md5(challenge.encode()).hexdigest()
-    PERSONAL_SECRET_MD5 = hmac.new(PERSONAL_SECRET, challenge.encode(), 'md5')
+    PERSONAL_SECRET_MD5 = hmac.new(PERSONAL_SECRET.encode(), message_bytes, hashlib.md5).hexdigest()
     to_send = PERSONAL_ID + ' ' + PERSONAL_SECRET_MD5
     to_send = to_send.encode('ascii')
     base64_bytes = base64.b64encode(to_send)
