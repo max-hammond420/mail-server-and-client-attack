@@ -320,7 +320,7 @@ def server(HOST, PORT, checkpoints, file):
 
                         if data.strip() == digest.strip():
                             print("yes cunt")
-                        while data.strip() != a.strip():
+                        while data.strip() != digest.strip():
                             if data.strip() == "AUTH CRAM-MD5":
                                 continue
                             response = "535 Authentication credentials invalid"
@@ -360,7 +360,6 @@ def server(HOST, PORT, checkpoints, file):
                 ls.append(data)
 
                 data = data.strip()
-                data = data.split()
 
                 if data[0] == "QUIT":
                     response = "221 Service closing transmission channel"
