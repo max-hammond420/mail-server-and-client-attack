@@ -309,37 +309,32 @@ def server(HOST, PORT, checkpoints, file):
                 digest = compute_digest(challenge)
 
                 # AUTH
-                while True:
-                    if data == "AUTH CRAM-MD5\r\n":
-                        response = f"334 {challenge}"
+                if data == "AUTH CRAM-MD5\r\n":
+                    response = f"334 {challenge}"
 
+                    print(f"S: {response}\r\n", end='', flush=True)
+                    conn.send((response+'\r\n').encode())
+
+                    data = conn.recv(1024).decode()
+
+                    if data.strip() == digest.strip():
+                        print("yes cunt")
+                    while data.strip() != digest.strip():
+
+                        response = "535 Authentication credentials invalid"
                         print(f"S: {response}\r\n", end='', flush=True)
                         conn.send((response+'\r\n').encode())
-
                         data = conn.recv(1024).decode()
 
-                        if data.strip() == digest.strip():
-                            print("yes cunt")
-                        while data.strip() != digest.strip():
-                            if data.strip() == "AUTH CRAM-MD5":
-                                continue
-                            response = "535 Authentication credentials invalid"
-                            print(f"S: {response}\r\n", end='', flush=True)
-                            conn.send((response+'\r\n').encode())
-                            data = conn.recv(1024).decode()
-                            print(f"client: {data.strip()}")
-                            if data.strip() == "QUIT":
-                                data = data.strip()
-                                break
-                            print(f"C: {data}", end='', flush=True)
-                        response = "235 Authentication successful\r\n"
-                        print(f"S: {response}\r\n", end='', flush=True)
-                        conn.send((response+'\r\n').encode())
+                        print(f"client: {data.strip()}")
 
-                        continue
-                    else:
-                        print("break")
-                        break
+                        if data.strip() == "QUIT":
+                            data = data.strip()
+                            break
+                        print(f"C: {data}", end='', flush=True)
+                    response = "235 Authentication successful\r\n"
+                    print(f"S: {response}\r\n", end='', flush=True)
+                    conn.send((response+'\r\n').encode())
 
                 # If no client says nothing, do nothing
                 if not data:
