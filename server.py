@@ -280,6 +280,11 @@ def server(HOST, PORT, checkpoints, file):
             conn.send("220 Service ready\r\n".encode())
 
             # authentication
+            data = conn.recv(1024).decode()
+            if data == "AUTH CRAM-MD5\r\n":
+                response = "334 test"
+                print(f"S: {response}\r\n", end='', flush=True)
+                conn.send((response+'\r\n').encode())
 
             # Mesasge loop
             while True:
