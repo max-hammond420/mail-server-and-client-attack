@@ -96,8 +96,7 @@ def generate_challenge():
     # returns a string that is 16 <= len <= 128 bytes
     bytes = random.randint(16, 128)
     challenge = secrets.token_hex(bytes)
-    print(challenge)
-    return str
+    return challenge
 
 
 def check_ipv4(ip):
